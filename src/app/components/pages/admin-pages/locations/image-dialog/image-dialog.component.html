@@ -1,0 +1,21 @@
+<div class="background">
+    <h1 mat-dialog-title> Upload an image! </h1>
+
+    <input type="file" class="file-input" (change)="uploadFile($event)" #fileUpload>
+
+    <div *ngIf="imageSelected">
+        <p>Do you want to upload: {{ uploadedImage.name }} for {{data.location.locationName}}?</p>
+    </div>
+
+    <div class="d-flex">
+        <button mat-dialog-close class="primary-action-btn action-btn">
+            Cancel
+        </button>
+        <button *ngIf="!imageSelected" class="primary-action-btn action-btn ms-auto" (click)="fileUpload.click()">
+            Browse
+        </button>
+        <button mat-dialog-close *ngIf="imageSelected" class="primary-action-btn action-btn ms-auto" (click)="uploadImage()">
+            Upload
+        </button>
+    </div>
+</div>

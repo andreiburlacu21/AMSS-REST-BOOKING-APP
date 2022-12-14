@@ -1,0 +1,94 @@
+@use '@angular/material' as mat;
+@include mat.core();
+@import 'assets/effects/effects.scss';
+
+// // LIGHT THEME
+
+// $SESFIR-APP-primary: mat.define-palette(mat.$indigo-palette);
+// $SESFIR-APP-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+// $SESFIR-APP-warn: mat.define-palette(mat.$red-palette);
+
+// $SESFIR-APP-theme: mat.define-light-theme((
+//   color: (
+//     primary: $SESFIR-APP-primary,
+//     accent: $SESFIR-APP-accent,
+//     warn: $SESFIR-APP-warn,
+//   )
+// ));
+
+// @include mat.all-component-themes($SESFIR-APP-theme);
+
+.light-theme {
+  @import "assets/themes/light-theme.scss";
+  @import "assets/theme-components/light-theme-components.scss";
+}
+
+.dark-theme {
+  @import "assets/themes/dark-theme.scss";
+  @import "assets/theme-components/dark-theme-components.scss";
+}
+
+
+/* GLOBAL STYLES */
+html, body { 
+  height: 100%; 
+}
+
+body { 
+  margin: 0; 
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
+}
+
+.sesfir-btn:hover {
+  cursor: pointer;
+}
+
+.sesfir-icon-btn {
+  background: transparent;
+  border: none;
+}
+
+.success-notification {
+  background-color: rgb(12, 175, 12) !important;
+  color: white !important;
+  font-weight: 500 !important;
+}
+
+.error-notification {
+  background-color: rgb(150, 6, 6) !important;
+  color: white !important;
+  font-weight: 500 !important;
+}
+
+.active-icon-fill {
+  color: #DAA621 !important;
+}
+
+// Scroll bar
+
+::-webkit-scrollbar {
+  width: 4px;
+  overflow-y: scroll;
+  background: transparent;
+  border: 0.3px solid black;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #DAA621;
+}
+
+.edit-btn {
+  background-color: rgb(212, 170, 31) !important;
+}
+
+.delete-btn {
+  background-color: rgb(192, 42, 42) !important;
+}
+
+.add-photo-btn {
+  background-color: #DAA621 !important;
+}
+
+.add-btn {
+  background-color: rgb(23, 169, 44) !important;
+}

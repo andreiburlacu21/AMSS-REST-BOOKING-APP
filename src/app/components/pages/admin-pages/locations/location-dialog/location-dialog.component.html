@@ -1,0 +1,134 @@
+<div class="dialog-container">
+    <h1 mat-dialog-title> {{ action }} location</h1>
+
+    <!-- ADMIN WANTS TO ADD -->
+    <div mat-dialog-content *ngIf="action === 'Add'">
+        <div class="row justify-content-center">
+            <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput required [formControl]="nameFormControl">
+                <mat-error *ngIf="nameFormControl.hasError('required')"> Location name is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Address</mat-label>
+                <input matInput required [formControl]="addressFormControl">
+                <mat-error *ngIf="addressFormControl.hasError('required')"> Address is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Price per day</mat-label>
+                <input matInput required [formControl]="pricePerHourFormControl">
+                <mat-error *ngIf="pricePerHourFormControl.hasError('required')"> Price per hour is
+                    <strong>required</strong> </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>X coordinate</mat-label>
+                <input matInput required [formControl]="locationXFormControl">
+                <mat-error *ngIf="locationXFormControl.hasError('required')"> X coordinate is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Y coordinate</mat-label>
+                <input matInput required [formControl]="locationYFormControl">
+                <mat-error *ngIf="locationYFormControl.hasError('required')"> Y coordinate is
+                    <strong>required</strong> </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="d-flex" *ngIf="action === 'Add'">
+        <button mat-dialog-close class="primary-action-btn action-btn">Cancel</button>
+        <button class="primary-action-btn action-btn ms-auto" [disabled]="nameFormControl.hasError('required') || 
+        addressFormControl.hasError('required') || locationXFormControl.hasError('required') || 
+        locationYFormControl.hasError('required') || pricePerHourFormControl.hasError('required')"
+            (click)="addLocation()">
+            Add
+        </button>
+    </div>
+
+    <!-- ADMIN WANTS TO UPDATE -->
+    <div mat-dialog-content *ngIf="action === 'Edit'">
+        <div class="row justify-content-center">
+            <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput required [formControl]="nameFormControl">
+                <mat-error *ngIf="nameFormControl.hasError('required')"> Location name is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Address</mat-label>
+                <input matInput required [formControl]="addressFormControl">
+                <mat-error *ngIf="addressFormControl.hasError('required')"> Address is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Price per hour</mat-label>
+                <input matInput required [formControl]="pricePerHourFormControl">
+                <mat-error *ngIf="pricePerHourFormControl.hasError('required')"> Price per hour is
+                    <strong>required</strong> </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>X coordinate</mat-label>
+                <input matInput required [formControl]="locationXFormControl">
+                <mat-error *ngIf="locationXFormControl.hasError('required')"> X coordinate is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Y coordinate</mat-label>
+                <input matInput required [formControl]="locationYFormControl">
+                <mat-error *ngIf="locationYFormControl.hasError('required')"> Y coordinate is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="d-flex" *ngIf="action === 'Edit'">
+        <button mat-dialog-close class="primary-action-btn action-btn">Cancel</button>
+        <button class="primary-action-btn action-btn ms-auto" [disabled]="nameFormControl.hasError('required') || 
+        addressFormControl.hasError('required') || locationXFormControl.hasError('required') || pricePerHourFormControl.hasError('required')
+        || locationYFormControl.hasError('requerd')"
+            (click)="updateLocation()">
+            Update
+        </button>
+    </div>
+
+    <!-- ADMIN WANTS TO DELETE -->
+    <div mat-dialog-content *ngIf="action === 'Delete'" class="mb-3">
+        <p> Are you sure you want to delete this location? </p>
+        <table>
+            <tbody>
+                <tr>
+                    <td>Name: {{location.locationName}}</td>
+                </tr>
+                <tr>
+                    <td>Address: {{location.address}}</td>
+                </tr>
+                <tr>
+                    <td>Price per hour: {{location.pricePerHour}}</td>
+                </tr>
+                <tr>
+                    <td>X coordinate: {{location.locationX}}</td>
+                </tr>
+                <tr>
+                    <td>Y coordinate: {{location.locationY}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="d-flex" *ngIf="action === 'Delete'">
+        <button mat-dialog-close class="primary-action-btn action-btn">Cancel</button>
+        <button class="primary-action-btn action-btn ms-auto" (click)="deleteLocation()">
+            Yes
+        </button>
+    </div>
+</div>

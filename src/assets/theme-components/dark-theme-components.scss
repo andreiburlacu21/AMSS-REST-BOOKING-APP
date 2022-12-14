@@ -1,0 +1,36 @@
+// BUTTONS
+.primary-action-btn {
+    height: 35px;
+    border: none;
+    color: white;
+    background-color: #DAA621;
+    border-radius: 8px;
+}
+
+.primary-action-btn:disabled {
+    background-color: #687e8c;
+}
+
+.secondary-action-btn {
+    height: 35px;
+    border: none;
+    color: white;
+    background-color: #DAA621;
+    border-radius: 8px;
+}
+
+// TEXT
+.primary-text {
+    color: #EFF0F1;
+}
+
+// COLORS
+.card-bg-color {
+    background-color: rgb(57,57,57) !important;
+}
+
+// COMPONENTS
+
+.review-card {
+    background-color: #444242;
+}

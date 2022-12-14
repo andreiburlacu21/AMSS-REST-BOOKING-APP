@@ -1,0 +1,23 @@
+<div class="app-container h-100 m-0 p-0" [ngClass]="theme === 'LIGHT' ? 'light-theme' : 'dark-theme'">
+    <app-toolbar (needToOpenSideMenu)="openOrCloseTheSideMenu($event)"></app-toolbar>
+
+    <mat-sidenav-container *ngIf="!isUserLoggedId" class="sidenav-container">
+        <app-login-or-register (login)="userLoggedIn($event)"></app-login-or-register>
+    </mat-sidenav-container>
+
+    <ng-container *ngIf="isUserLoggedId">
+        <mat-sidenav-container class="sidenav-container">
+            <mat-sidenav *ngIf="!hideSidenav" [opened]="true" mode="side" class="sidenav h-100">
+                <app-side-menu (themeChanged)="changeTheme($event)" [currentTheme]="theme"></app-side-menu>
+            </mat-sidenav>
+
+            <router-outlet></router-outlet>
+
+            <div>
+                <button mat-mini-fab color="primary" class="fab-button" (click)="logout()">
+                    <mat-icon>logout</mat-icon>
+                </button>
+            </div>
+        </mat-sidenav-container>
+    </ng-container>
+</div>

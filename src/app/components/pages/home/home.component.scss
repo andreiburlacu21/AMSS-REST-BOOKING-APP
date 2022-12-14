@@ -1,0 +1,51 @@
+.search-input-field {
+    width: 280px;
+}
+
+.card-item {
+    height: 300px;
+    width: 250px;
+}
+
+.card-item:hover {
+    cursor: pointer;
+}
+
+.card-icon {
+    transform: scale(2);
+}
+
+.content {
+    height: 180px;
+}
+
+.cards-container {
+    margin-top: 80px;
+}
+
+.example-action-buttons {
+    padding-bottom: 20px;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.example-headers-align .mat-mdc-form-field+.mat-mdc-form-field {
+    margin-left: 8px;
+}
+
+.locations-container {
+    height: 70vh;
+    overflow-y: auto;
+}
+
+.location-header {
+    height: 70px;
+}
+
+.primary-action-btn {
+    width: 100px;
+}
+

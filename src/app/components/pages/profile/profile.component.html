@@ -1,0 +1,126 @@
+<div class="row d-flex justify-content-center">
+    <mat-card class="row profile-card col-7 mt-3">
+        <div class="d-flex justify-content-center mt-3">
+            <mat-icon class="profile-icon">account_circle</mat-icon>
+        </div>
+
+        <div *ngIf="isLoading" class="h-100 m-0 p-0 d-flex justify-content-center align-items-center mt-5">
+            <mat-spinner [diameter]="50" class="loading-spinner"></mat-spinner>
+        </div>
+
+        <div *ngIf="!isLoading" class="mt-5">
+            <div class="d-flex align-items-center">
+                <h1>Account information:</h1>
+                <!-- <button mat-mini-fab class="action-fab-btn edit-btn mb-3 ms-3">
+                    <mat-icon> edit </mat-icon>
+                </button> -->
+            </div>
+
+            <div *ngIf="!userWantsToUpdate">
+                <div class="mt-2">
+                    <span class="label me-1">Email: </span>
+                    <span> {{ account.email }} </span>
+                </div>
+        
+                <div class="mt-2">
+                    <span class="label me-1">Username: </span>
+                    <span> {{ account.userName }} </span>
+                </div>
+        
+                <div class="mt-2">
+                    <span class="label me-1">Phone number: </span>
+                    <span> {{ account.phoneNumber }} </span>
+                </div>
+            </div>
+            
+        </div>
+    </mat-card>
+
+    <mat-card class="locations-container col-7 mt-2 mb-5">
+        <mat-accordion *ngIf="!isLoading" class="example-headers-align" multi>
+            <mat-expansion-panel class="mb-3">
+                <mat-expansion-panel-header class="location-header">
+                    <mat-panel-title class="mt-4 mb-4">
+                        <mat-icon class="me-2">book_online</mat-icon>
+                        Bookings
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        {{ myBookings.length }}
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <div *ngIf="bookingsAreLoading" class="m-0 p-0 d-flex justify-content-center align-items-center">
+                    <mat-spinner [diameter]="40"> Loading bookings data </mat-spinner>
+                </div>
+
+                <ng-container *ngIf="!bookingsAreLoading">
+                    <div class="row mb-4" *ngFor="let booking of myBookings">
+                        <div>
+                            <span class="me-2">Location:</span> {{ booking.bookingEntity?.location?.locationName }}
+                        </div>
+    
+                        <div>
+                            <span class="me-2">Location address:</span> {{ booking.bookingEntity?.location?.address }}
+                        </div>
+    
+                        <div>
+                            <span class="me-2">From:</span> {{ booking.inDate | date : "dd-MM-yyyy" }}
+                        </div>
+    
+                        <div>
+                            <span class="me-2">To:</span> {{ booking.outDate | date : "dd-MM-yyyy" }}
+                        </div>
+    
+                        <div>
+                            <span class="me-2">Total cost:</span> {{ booking.totalPrice }}
+                        </div>
+                    </div>
+                </ng-container>
+              
+            </mat-expansion-panel>
+        </mat-accordion>
+
+        <mat-accordion *ngIf="!isLoading" class="example-headers-align" multi>
+            <mat-expansion-panel class="mb-3">
+                <mat-expansion-panel-header class="location-header">
+                    <mat-panel-title class="mt-4 mb-4">
+                        <mat-icon class="me-2">rate_review</mat-icon>
+                        Reviews
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        {{ myReviews.length }}
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <div *ngIf="reviewsAreLoading" class="m-0 p-0 d-flex justify-content-center align-items-center">
+                    <mat-spinner [diameter]="40" class="loading-spinner"> Loading reviews data </mat-spinner>
+                </div>
+
+                <ng-container *ngIf="!reviewsAreLoading">
+                    <div class="row mb-5" *ngFor="let review of myReviews">
+                        <div>
+                            <span class="me-2">Location:</span> {{ review.reviewEntity?.location?.locationName }}
+                        </div>
+    
+                        <div>
+                            <span class="me-2">Location address:</span> {{ review.reviewEntity?.location?.address }}
+                        </div>
+    
+                        <div>
+                            <span class="me-2">Comment:</span> {{ review.description }}
+                        </div>
+    
+                        <div>
+                            <span class="me-2">Date:</span> {{ review.date | date : "dd-MM-yyyy" }}
+                        </div>
+    
+                        <div>
+                            <span class="me-2 pt-1">Rate:</span>
+                            <app-star-rating [rating]="review.grade!" [readonly]="true"></app-star-rating>
+                        </div>
+                    </div>
+                </ng-container>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </mat-card>
+</div>

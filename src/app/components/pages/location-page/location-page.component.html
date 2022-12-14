@@ -1,0 +1,74 @@
+<div class="row page-container d-flex justify-content-center">
+    <mat-progress-bar *ngIf="isLoading" mode="indeterminate" class="m-0 p-0"></mat-progress-bar>
+
+    <mat-card class="row col-10 mt-3">
+        <div class="d-flex align-items-center">
+            <button mat-mini-fab color="primary" class="action-fab-btn me-3" [routerLink]="['/home']">
+                <mat-icon> arrow_back </mat-icon>
+            </button>
+            <span class="float-start title">{{location.locationName}}</span>
+            <app-star-rating *ngIf="!isLoading" [rating]="calculateLocationRating(location.locationId!!)"
+                [readonly]="true" class="ms-auto"></app-star-rating>
+        </div>
+    </mat-card>
+
+    <mat-card class="locations-container col-10 mt-2">
+        <div style=" text-align:center;margin:0; padding:0;">
+            <ng-image-slider #nav [images]="imageObject" [infinite]="false" [autoSlide]="1"
+                [imageSize]="{width: '25%', height: 200}" slideImage="1" (imageClick)="zoomImage()"
+                (lightboxClose)="exitImage()">
+            </ng-image-slider>
+        </div>
+    </mat-card>
+
+    <mat-card class="col-10 mt-2">
+        <div class="d-flex align-items-center">
+            <mat-card-title class="pb-2 ms-2">Details</mat-card-title>
+            <button mat-mini-fab class="action-fab-btn ms-auto add-photo-btn" (click)="book()">
+                <mat-icon> book </mat-icon>
+            </button>
+            <span class="me-2">Make a reservation</span>
+        </div>
+        <p> <span class="me-2 ms-2">Address: </span> {{location.address}} </p>
+        <p> <span class="me-2 ms-2">Price: </span> {{location.pricePerHour}} RON / 1 day (8:00 AM - 10:59 PM) </p>
+    </mat-card>
+
+    <mat-card class="col-10 mt-2">
+        <mat-card-title class="pb-2 ms-2">Location</mat-card-title>
+        <mat-card-content class="img-container d-flex justify-content-center mt-4 ms-5 me-5">
+            <google-map height="400px" width="1050px" [center]="center" [zoom]="zoom">
+                <map-marker [position]="center" [options]="markerOptions"></map-marker>
+            </google-map>
+
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="col-10 mt-2 mb-5">
+        <div class="d-flex align-items-center">
+            <mat-card-title class="ms-2">Reviews</mat-card-title>
+            <button mat-mini-fab class="action-fab-btn ms-auto add-photo-btn" (click)="writeReview()">
+                <mat-icon> rate_review </mat-icon>
+            </button>
+            <span class="me-2">Write a review</span>
+        </div>
+
+        <mat-card-content *ngIf="reviews.length > 0" class="row mt-3 d-flex justify-content-center reviews-card">
+            <mat-card class="row mb-2 review-card" *ngFor="let review of reviews; index as i">
+                <mat-card-header>
+                    <mat-card-subtitle class="pt-1"> {{i+1}}. <span class="ms-2"> {{review.reviewEntity?.account?.userName}}</span>
+                    </mat-card-subtitle>
+                    <app-star-rating [rating]="review.grade!!" [readonly]="true" class="ms-auto"></app-star-rating>
+                </mat-card-header>
+                <mat-card-content class="mt-3 ms-3">
+                    <p>{{ review.description }}</p>
+                    <span>Posted: {{ review.date | date : "dd-MM-yyyy" }}</span>
+                </mat-card-content>
+            </mat-card>
+        </mat-card-content>
+
+        <mat-card-content *ngIf="reviews.length <= 0 && !isLoading"
+            class="row mt-3 d-flex justify-content-center reviews-card">
+            <h3 class="col-4 ps-5">Be the first one to review this location!</h3>
+        </mat-card-content>
+    </mat-card>
+</div>

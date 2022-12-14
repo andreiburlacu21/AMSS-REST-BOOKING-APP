@@ -1,0 +1,23 @@
+<div class="review-container">
+    <h2 class="ms-1">{{location.locationName}}</h2>
+
+    <div class="row d-flex justify-content-center mb-1">
+        <span class="ms-3">Rate: </span>
+        <app-star-rating [rating]="0" [readonly]="false" (ratingUpdated)="ratingUpdated($event)"></app-star-rating>
+    </div>
+
+    <div class="row d-flex justify-content-center">
+        <mat-form-field appearance="outline">
+            <mat-label>Add a comment</mat-label>
+            <textarea matInput required [formControl]="descriptionFormControl" rows="5"></textarea>
+            <mat-error *ngIf="descriptionFormControl.hasError('required')"> Comment is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="d-flex">
+        <button class="primary-action-btn action-btn ms-auto" (click)="postReview()">
+            Post
+        </button>
+    </div>
+</div>

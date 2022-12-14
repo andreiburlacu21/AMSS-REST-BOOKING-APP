@@ -1,0 +1,71 @@
+<div class="row d-flex justify-content-center">
+    <mat-card class="row col-10 mt-3">
+        <div class="d-flex align-items-center">
+            <button mat-mini-fab color="primary" class="action-fab-btn" [routerLink]="['/home']">
+                <mat-icon> arrow_back </mat-icon>
+            </button>
+            <span class="float-start title">Bookings</span>
+            <button mat-mini-fab class="action-fab-btn ms-auto add-btn" (click)="addBooking()">
+                <mat-icon> add </mat-icon>
+            </button>
+            <span>Add new booking</span>
+        </div>
+    </mat-card>
+    <mat-card class="table-container col-10 mt-2">
+        <div *ngIf="bookings.length === 0 && !isLoading" class="text-center mt-5">
+            <mat-icon class="no-results-icon">folder_off</mat-icon>
+            <p class="text-center title mt-5"> There are no bookings to be displayed! </p>
+        </div>
+
+        <div *ngIf="isLoading" class="h-100 m-0 p-0 d-flex justify-content-center align-items-center">
+            <mat-spinner class="loading-spinner"></mat-spinner>
+        </div>
+
+        <table *ngIf="bookings.length > 0" class="table text-center primary-text">
+            <thead>
+                <tr>
+                    <th scope="col"> Account Id </th>
+                    <th scope="col"> Location Id </th>
+                    <th scope="col"> Phone Number </th>
+                    <th scope="col"> Check in </th>
+                    <th scope="col"> Check out </th>
+                    <th scope="col"> Price </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let booking of bookings" class="align-items-center">
+                    <td class="pt-3">
+                        {{ booking.accountId }}
+                    </td>
+                    <td class="pt-3">
+                        {{ booking.locationId }}
+                    </td>
+                    <td class="pt-3">
+                        {{ booking.phoneNumber }}
+                    </td>
+                    <td class="pt-3">
+                        {{ booking.inDate | date : 'dd-MM-yyyy' }} {{ booking.inDate | date : 'HH:mm' }}
+                    </td>
+                    <td class="pt-3">
+                        {{ booking.outDate | date : 'dd-MM-yyyy' }} {{ booking.outDate | date : 'HH:mm' }}
+                    </td>
+                    <td class="pt-3">
+                        {{ booking.totalPrice }}
+                    </td>
+                    <td>
+                        <button mat-mini-fab class="action-fab-btn edit-btn" (click)="editBooking(booking)">
+                            <mat-icon> edit </mat-icon>
+                        </button>
+                    </td>
+                    <td>
+                        <button mat-mini-fab class="action-fab-btn delete-btn" (click)="deleteBooking(booking)">
+                            <mat-icon> delete </mat-icon>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </mat-card>
+</div>

@@ -1,0 +1,144 @@
+<div class="dialog-container">
+    <h1 mat-dialog-title> {{ action }} booking</h1>
+
+    <!-- ADMIN WANTS TO ADD -->
+    <div mat-dialog-content *ngIf="action === 'Add'">
+        <div class="row justify-content-center">
+            <mat-form-field appearance="outline">
+                <mat-label>Account</mat-label>
+                <mat-select [formControl]="accountIdFormControl">
+                    <mat-option *ngFor="let item of accountData" [value]="item.accountId">{{item.userName}}</mat-option>
+                </mat-select>
+                <mat-icon matSuffix>person</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Location</mat-label>
+                <mat-select [formControl]="locationFormControl" (closed)="setAvailabilityDate()">
+                    <mat-option *ngFor="let item of locationData" 
+                                            [value]="item.locationId">
+                                            {{item.locationName}}
+                    </mat-option>
+                </mat-select>
+                <mat-icon matSuffix>location_on</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Phone number</mat-label>
+                <input matInput required [formControl]="phoneNumberFormControl">
+                <mat-error *ngIf="phoneNumberFormControl.hasError('required')"> Phone number is
+                    <strong>required</strong> </mat-error>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="enableDates" appearance="fill">
+                <mat-label>Check in date</mat-label>
+                <input matInput [min]="minDate" [formControl]="inDateFormControl" [matDatepickerFilter]="myFilterIn"
+                    [matDatepicker]="makePicker" (dateChange)="setInDate()">
+                <mat-datepicker-toggle matSuffix [for]="makePicker"></mat-datepicker-toggle>
+                <mat-datepicker [dateClass]="dateClass" #makePicker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="enableDates" appearance="fill">
+                <mat-label>Check out date</mat-label>
+                <input matInput [min]="minDate" [formControl]="outDateFormControl" [matDatepickerFilter]="myFilterOut"
+                    [matDatepicker]="makePicker">
+                <mat-datepicker-toggle matSuffix [for]="makePicker"></mat-datepicker-toggle>
+                <mat-datepicker [dateClass]="dateClass" #makePicker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Total price</mat-label>
+                <input matInput required [formControl]="totalPriceFormControl">
+                <mat-error *ngIf="totalPriceFormControl.hasError('required')"> Total price is
+                    <strong>required</strong> </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="d-flex" *ngIf="action === 'Add'">
+        <button mat-dialog-close class="primary-action-btn action-btn">Cancel</button>
+        <button class="primary-action-btn action-btn ms-auto" [disabled]="accountIdFormControl.hasError('required') || 
+        locationFormControl.hasError('required') || inDateFormControl.hasError('required') || 
+        outDateFormControl.hasError('required') || phoneNumberFormControl.hasError('required') || 
+        totalPriceFormControl.hasError('required')"
+            (click)="addBooking()">
+            Add
+        </button>
+    </div>
+
+    <!-- ADMIN WANTS TO UPDATE -->
+    <div mat-dialog-content *ngIf="action === 'Edit'">
+        <div class="row justify-content-center">
+            <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput required [formControl]="accountIdFormControl">
+                <mat-error *ngIf="accountIdFormControl.hasError('required')"> Email is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Username</mat-label>
+                <input matInput required [formControl]="locationFormControl">
+                <mat-error *ngIf="locationFormControl.hasError('required')"> Username is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Phone number</mat-label>
+                <input matInput required [formControl]="phoneNumberFormControl">
+                <mat-error *ngIf="phoneNumberFormControl.hasError('required')"> Phone number is
+                    <strong>required</strong> </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput required type="password" [formControl]="inDateFormControl">
+                <mat-error *ngIf="inDateFormControl.hasError('required')"> Password is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="d-flex" *ngIf="action === 'Edit'">
+        <button mat-dialog-close class="primary-action-btn action-btn">Cancel</button>
+        <button class="primary-action-btn action-btn ms-auto" [disabled]="accountIdFormControl.hasError('required') || 
+        locationFormControl.hasError('required') || inDateFormControl.hasError('required') || phoneNumberFormControl.hasError('required')"
+            (click)="updateBooking()">
+            Update
+        </button>
+    </div>
+
+    <!-- ADMIN WANTS TO DELETE -->
+    <div mat-dialog-content *ngIf="action === 'Delete'" class="mb-3">
+        <p> Are you sure you want to delete this booking? </p>
+        <table>
+            <tbody>
+                <tr>
+                    <td>Account id: {{booking.accountId}}</td>
+                </tr>
+                <tr>
+                    <td>Location id: {{booking.locationId}}</td>
+                </tr>
+                <tr>
+                    <td>Phone number: {{booking.phoneNumber}}</td>
+                </tr>
+                <!-- <tr>
+                    <td>Check in: {{booking.inDate | date}}</td>
+                </tr>
+                <tr>
+                    <td>Check out: {{booking.outDate | date}}</td>
+                </tr> -->
+                <tr>
+                    <td>Total price: {{booking.totalPrice}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="d-flex" *ngIf="action === 'Delete'">
+        <button mat-dialog-close class="primary-action-btn action-btn">Cancel</button>
+        <button class="primary-action-btn action-btn ms-auto" (click)="deleteBooking()">
+            Yes
+        </button>
+    </div>
+</div>
