@@ -22,16 +22,57 @@
     </mat-card>
 
     <mat-card class="col-10 mt-2">
-        <div class="d-flex align-items-center">
+        <mat-card-title class="pb-2 ms-2">Details</mat-card-title>
+        <!-- <div class="d-flex align-items-center">
             <mat-card-title class="pb-2 ms-2">Details</mat-card-title>
             <button mat-mini-fab class="action-fab-btn ms-auto add-photo-btn" (click)="book()">
                 <mat-icon> book </mat-icon>
             </button>
             <span class="me-2">Make a reservation</span>
-        </div>
+        </div> -->
         <p> <span class="me-2 ms-2">Address: </span> {{location.address}} </p>
         <p> <span class="me-2 ms-2">Price: </span> {{location.pricePerHour}} RON / 1 day (8:00 AM - 10:59 PM) </p>
     </mat-card>
+
+    <mat-accordion *ngIf="!isLoading" class="example-headers-align booking-component col-10 mt-2" multi>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header class="location-header">
+                <div class="d-flex align-items-center">
+                    <button mat-mini-fab class="action-fab-btn ms-auto add-photo-btn">
+                        <mat-icon> book </mat-icon>
+                    </button>
+                    <span class="me-2">Make a reservation</span>
+                </div>
+            </mat-expansion-panel-header>
+
+            <div class="row d-flex justify-content-center mt-4">
+                <mat-form-field class="date-picker" appearance="fill">
+                    <mat-label>Select a day</mat-label>
+                    <input matInput>
+                    <mat-datepicker-toggle matSuffix [for]="makePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #makePicker></mat-datepicker>
+                </mat-form-field>
+
+                <div *ngIf="outdoorTables.length > 0" class="location-component col-7 d-flex justify-content-center me-2">
+                    <p class="mb-3">Indoor tables</p>
+
+                    <div class="grid-container">
+                        <app-table class="grid-item" *ngFor="let table of indoorTables" [numberOfSeats]="table.numberOfSeats!!">
+                        </app-table>
+                    </div>
+                </div>
+
+                <div *ngIf="outdoorTables.length === 0" class="location-component col-11 d-flex justify-content-center me-2">
+                    <p class="mb-3">Indoor tables</p>
+                </div>
+
+                <div *ngIf="outdoorTables.length > 0" class="location-component col-4 d-flex justify-content-center">
+                    <p class="mb-3">Outdoor tables</p>
+                </div>
+            </div>
+
+        </mat-expansion-panel>
+    </mat-accordion>
 
     <mat-card class="col-10 mt-2">
         <mat-card-title class="pb-2 ms-2">Location</mat-card-title>

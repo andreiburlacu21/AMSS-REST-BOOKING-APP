@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Account } from 'src/app/models/account.model';
 import { Location } from 'src/app/models/location.model';
 import { Review } from 'src/app/models/review.model';
+import { Table } from 'src/app/models/table.model';
 import { AccountService } from 'src/app/services/account-service/account.service';
 import { ImageService } from 'src/app/services/image-service/image.service';
 import { NotificationService } from 'src/app/services/notification-service/notification.service';
@@ -42,6 +43,11 @@ export class LocationPageComponent implements OnInit {
 
   zoom = 17;
 
+  // MOCK DATA
+
+  indoorTables: Table[] = [];
+  outdoorTables: Table[] = [];
+
   constructor(private router: Router,
     private imageService: ImageService,
     private reviewService: ReviewService,
@@ -55,6 +61,65 @@ export class LocationPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // TEMP
+    this.indoorTables.push({
+      id: 1,
+      restaurantId: 1,
+      numberOfSeats: 4,
+      outdoor: false
+    });
+
+    this.indoorTables.push({
+      id: 2,
+      restaurantId: 1,
+      numberOfSeats: 4,
+      outdoor: false
+    });
+
+    this.indoorTables.push({
+      id: 3,
+      restaurantId: 1,
+      numberOfSeats: 4,
+      outdoor: false
+    });
+    
+    this.indoorTables.push({
+      id: 4,
+      restaurantId: 1,
+      numberOfSeats: 6,
+      outdoor: false
+    });
+
+    this.indoorTables.push({
+      id: 5,
+      restaurantId: 1,
+      numberOfSeats: 6,
+      outdoor: false
+    });
+
+
+    this.outdoorTables.push({
+      id: 6,
+      restaurantId: 1,
+      numberOfSeats: 2,
+      outdoor: true
+    });
+
+    this.outdoorTables.push({
+      id: 7,
+      restaurantId: 1,
+      numberOfSeats: 2,
+      outdoor: true
+    });
+
+    this.outdoorTables.push({
+      id: 8,
+      restaurantId: 1,
+      numberOfSeats: 2,
+      outdoor: true
+    });
+    // --- END TEMP
+
     if (this.location) {
       this.getLocationData();
     }

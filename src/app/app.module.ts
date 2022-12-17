@@ -27,6 +27,7 @@ import { WriteAReviewComponent } from './components/pages/location-page/write-a-
 import { GoogleMapsModule } from '@angular/google-maps';
 import { ProfileComponent } from './components/pages/profile/profile.component';
 import { MakeAReservationComponent } from './components/pages/location-page/make-a-reservation/make-a-reservation.component';
+import { TableComponent } from './components/general-components/table/table.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { MakeAReservationComponent } from './components/pages/location-page/make
     LocationPageComponent,
     WriteAReviewComponent,
     ProfileComponent,
-    MakeAReservationComponent
+    MakeAReservationComponent,
+    TableComponent
   ],
   imports: [
     BrowserModule,
