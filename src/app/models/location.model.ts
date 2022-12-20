@@ -1,9 +1,6 @@
 export class Location {
-    locationId?: number;
-    locationName?: string; 
+    id?: number;
     address?: string;
-    imageLocation?: string; 
-    pricePerHour?: number; 
-    locationX?: number;
-    locationY?: number;
+    x?: number;
+    y?: number;
 }

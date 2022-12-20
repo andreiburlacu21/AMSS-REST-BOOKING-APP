@@ -1,13 +1,13 @@
 <div class="row page-container d-flex justify-content-center">
-    <mat-progress-bar *ngIf="isLoading" mode="indeterminate" class="m-0 p-0"></mat-progress-bar>
+    <!-- <mat-progress-bar *ngIf="isLoading" mode="indeterminate" class="m-0 p-0"></mat-progress-bar> -->
 
     <mat-card class="row col-10 mt-3">
         <div class="d-flex align-items-center">
             <button mat-mini-fab color="primary" class="action-fab-btn me-3" [routerLink]="['/home']">
                 <mat-icon> arrow_back </mat-icon>
             </button>
-            <span class="float-start title">{{location.locationName}}</span>
-            <app-star-rating *ngIf="!isLoading" [rating]="calculateLocationRating(location.locationId!!)"
+            <span class="float-start title">{{restaurant.name}}</span>
+            <app-star-rating *ngIf="!isLoading" [rating]="3"
                 [readonly]="true" class="ms-auto"></app-star-rating>
         </div>
     </mat-card>
@@ -22,52 +22,62 @@
     </mat-card>
 
     <mat-card class="col-10 mt-2">
-        <mat-card-title class="pb-2 ms-2">Details</mat-card-title>
-        <!-- <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center">
             <mat-card-title class="pb-2 ms-2">Details</mat-card-title>
-            <button mat-mini-fab class="action-fab-btn ms-auto add-photo-btn" (click)="book()">
-                <mat-icon> book </mat-icon>
-            </button>
-            <span class="me-2">Make a reservation</span>
-        </div> -->
+        </div>
         <p> <span class="me-2 ms-2">Address: </span> {{location.address}} </p>
-        <p> <span class="me-2 ms-2">Price: </span> {{location.pricePerHour}} RON / 1 day (8:00 AM - 10:59 PM) </p>
+        <p> <span class="me-2 ms-2">Description: </span> {{restaurant.description}}  </p>
     </mat-card>
 
-    <mat-accordion *ngIf="!isLoading" class="example-headers-align booking-component col-10 mt-2" multi>
+    <mat-accordion class="example-headers-align booking-component col-10 mt-2" multi>
         <mat-expansion-panel>
             <mat-expansion-panel-header class="location-header">
                 <div class="d-flex align-items-center">
                     <button mat-mini-fab class="action-fab-btn ms-auto add-photo-btn">
                         <mat-icon> book </mat-icon>
                     </button>
-                    <span class="me-2">Make a reservation</span>
+                    <mat-card-title class="pt-3">Make a reservation</mat-card-title>
                 </div>
             </mat-expansion-panel-header>
 
             <div class="row d-flex justify-content-center mt-4">
                 <mat-form-field class="date-picker" appearance="fill">
                     <mat-label>Select a day</mat-label>
-                    <input matInput>
+                    <input matInput [formControl]="inDateFormControl">
                     <mat-datepicker-toggle matSuffix [for]="makePicker"></mat-datepicker-toggle>
-                    <mat-datepicker #makePicker></mat-datepicker>
+                    <mat-datepicker [dateClass]="dateClass" #makePicker></mat-datepicker>
                 </mat-form-field>
 
-                <div *ngIf="outdoorTables.length > 0" class="location-component col-7 d-flex justify-content-center me-2">
+                <!-- <mat-form-field class="date-picker">
+                    <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" >
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds"
+                       [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond"
+                       [touchUi]="touchUi" [color]="color" [enableMeridian]="enableMeridian" 
+                       [disableMinute]="disableMinute" [hideTime]="hideTime">
+                    </ngx-mat-datetime-picker>
+                 </mat-form-field> -->
+
+                <div *ngIf="outdoorTables.length > 0" class="location-component col-7 me-2 pb-4">
                     <p class="mb-3">Indoor tables</p>
 
-                    <div class="grid-container">
+                    <div class="d-flex justify-content-center card-group gap-5 cards-container">
                         <app-table class="grid-item" *ngFor="let table of indoorTables" [numberOfSeats]="table.numberOfSeats!!">
                         </app-table>
                     </div>
                 </div>
 
-                <div *ngIf="outdoorTables.length === 0" class="location-component col-11 d-flex justify-content-center me-2">
+                <div *ngIf="outdoorTables.length === 0" class="location-component col-11 me-2 pb-4">
                     <p class="mb-3">Indoor tables</p>
                 </div>
 
-                <div *ngIf="outdoorTables.length > 0" class="location-component col-4 d-flex justify-content-center">
+                <div *ngIf="outdoorTables.length > 0" class="location-component col-4 me-2 pb-4">
                     <p class="mb-3">Outdoor tables</p>
+
+                    <div class="d-flex justify-content-center card-group gap-5 cards-container">
+                        <app-table class="grid-item" *ngFor="let table of outdoorTables" [numberOfSeats]="table.numberOfSeats!!">
+                        </app-table>
+                    </div>
                 </div>
             </div>
 
@@ -87,7 +97,7 @@
     <mat-card class="col-10 mt-2 mb-5">
         <div class="d-flex align-items-center">
             <mat-card-title class="ms-2">Reviews</mat-card-title>
-            <button mat-mini-fab class="action-fab-btn ms-auto add-photo-btn" (click)="writeReview()">
+            <button mat-mini-fab class="action-fab-btn ms-auto add-photo-btn" (click)="writeReview()" [disabled]="true">
                 <mat-icon> rate_review </mat-icon>
             </button>
             <span class="me-2">Write a review</span>
@@ -96,7 +106,7 @@
         <mat-card-content *ngIf="reviews.length > 0" class="row mt-3 d-flex justify-content-center reviews-card">
             <mat-card class="row mb-2 review-card" *ngFor="let review of reviews; index as i">
                 <mat-card-header>
-                    <mat-card-subtitle class="pt-1"> {{i+1}}. <span class="ms-2"> {{review.reviewEntity?.account?.userName}}</span>
+                    <mat-card-subtitle class="pt-1"> {{i+1}}. <span class="ms-2"> User </span>
                     </mat-card-subtitle>
                     <app-star-rating [rating]="review.grade!!" [readonly]="true" class="ms-auto"></app-star-rating>
                 </mat-card-header>

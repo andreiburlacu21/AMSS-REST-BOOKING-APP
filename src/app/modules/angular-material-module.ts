@@ -17,6 +17,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
 import { MatBottomSheetModule, MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
+import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
+
 
 @NgModule ({
     exports: [
@@ -39,7 +41,9 @@ import { MatBottomSheetModule, MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '
         MatProgressBarModule,
         MatDatepickerModule,
         MatExpansionModule,
-        MatBottomSheetModule
+        MatBottomSheetModule,
+        NgxMatDatetimePickerModule,
+        NgxMatTimepickerModule
     ],
     providers: [
         { provide: MatBottomSheetRef, useValue: {} },

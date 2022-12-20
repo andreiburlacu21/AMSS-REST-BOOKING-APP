@@ -53,9 +53,9 @@ export class MakeAReservationComponent implements OnInit {
   }
 
   setAvailabilityDate() {
-    var id = this.location.locationId!!;
+    // var id = this.location.locationId!!;
     this.enableDates = true;
-    this.dateHelper = new DateHelper(this.bookingService, id);
+    // this.dateHelper = new DateHelper(this.bookingService, id);
     this.myFilterIn = this.dateHelper.myFilterIn;
     this.myFilterOut = this.dateHelper.myFilterOut;
   }
@@ -67,7 +67,7 @@ export class MakeAReservationComponent implements OnInit {
   setOutDate() {
     this.noOfDaysBooked = (((this.outDateFormControl.getRawValue() as unknown as Date).getTime() - (this.inDateFormControl.getRawValue() as unknown as Date).getTime()) 
     / (1000 * 3600 * 24) + 1);
-    this.totalPrice = this.noOfDaysBooked * this.location.pricePerHour!!;
+    // this.totalPrice = this.noOfDaysBooked * this.location.pricePerHour!!;
   }
 
   addBooking() {
@@ -76,7 +76,7 @@ export class MakeAReservationComponent implements OnInit {
     booking.inDate = this.inDateFormControl.getRawValue()?.toDateString();
     booking.outDate = this.outDateFormControl.getRawValue()?.toDateString();
     booking.phoneNumber = this.loggedInAccount.phoneNumber;
-    booking.locationId = this.location.locationId;
+    // booking.locationId = this.location.locationId;
     booking.totalPrice = this.totalPrice;
 
     this.bookingService.addBooking(booking)

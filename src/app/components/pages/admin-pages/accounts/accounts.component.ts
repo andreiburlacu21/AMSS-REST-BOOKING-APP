@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Account } from 'src/app/models/account.model';
+import { Role } from 'src/app/models/role';
 import { AccountService } from 'src/app/services/account-service/account.service';
 import { NotificationService } from 'src/app/services/notification-service/notification.service';
 import { Action } from 'src/app/utils/interceptor/admin-actions';
@@ -27,17 +28,37 @@ export class AccountsComponent implements OnInit {
 
   private getAllAccounts() {
     this.accounts = [];
-    this.isLoading = true;
-    this.accountService.getAllAccounts().subscribe({
-      next: resp => {
-        this.accounts = resp;
-        this.isLoading = false;
-      },
-      error: () => {
-        this.notificationService.showErrorNotification("There was an error while loading existing accounts!");
-        this.isLoading = false;
-      }
+
+    this.accounts.push({
+      accountId: 1,
+      userName: "andrei",
+      password: "pass123",
+      email: "andreiburlacu@gmail.com",
+      phoneNumber: "0756514773",
+      role: Role.Admin
     });
+
+    this.accounts.push({
+      accountId: 2,
+      userName: "marian",
+      password: "pass123",
+      email: "marianlucian@gmail.com",
+      phoneNumber: "0756514773",
+      role: Role.User
+    });
+
+
+    // this.isLoading = true;
+    // this.accountService.getAllAccounts().subscribe({
+    //   next: resp => {
+    //     this.accounts = resp;
+    //     this.isLoading = false;
+    //   },
+    //   error: () => {
+    //     this.notificationService.showErrorNotification("There was an error while loading existing accounts!");
+    //     this.isLoading = false;
+    //   }
+    // });
   }
 
   addAccount() {

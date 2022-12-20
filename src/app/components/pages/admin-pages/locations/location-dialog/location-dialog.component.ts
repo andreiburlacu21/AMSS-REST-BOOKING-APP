@@ -36,41 +36,41 @@ export class LocationDialogComponent implements OnInit {
     }
 
     if (this.action === Action.UPDATE) {
-      this.nameFormControl.setValue(this.location.locationName!!);
-      this.imageLocationFormControl.setValue(this.location.imageLocation!!);
-      this.addressFormControl.setValue(this.location.address!!);
-      this.pricePerHourFormControl.setValue(this.location.pricePerHour!!);
-      this.locationXFormControl.setValue(this.location.locationX!!);
-      this.locationYFormControl.setValue(this.location.locationY!!);
+      // this.nameFormControl.setValue(this.location.locationName!!);
+      // this.imageLocationFormControl.setValue(this.location.imageLocation!!);
+      // this.addressFormControl.setValue(this.location.address!!);
+      // this.pricePerHourFormControl.setValue(this.location.pricePerHour!!);
+      // this.locationXFormControl.setValue(this.location.locationX!!);
+      // this.locationYFormControl.setValue(this.location.locationY!!);
     }
   }
 
   addLocation() {
     let newLocation: Location = new Location();
-    newLocation.locationName = this.nameFormControl.getRawValue() ?? "";
-    newLocation.imageLocation = "location";
-    newLocation.address = this.addressFormControl.getRawValue() ?? ""; 
-    newLocation.pricePerHour = this.pricePerHourFormControl.getRawValue() ?? 0;
-    newLocation.locationX = this.locationXFormControl.getRawValue() ?? 0;
-    newLocation.locationY = this.locationYFormControl.getRawValue() ?? 0;
+    // newLocation.locationName = this.nameFormControl.getRawValue() ?? "";
+    // newLocation.imageLocation = "location";
+    // newLocation.address = this.addressFormControl.getRawValue() ?? ""; 
+    // newLocation.pricePerHour = this.pricePerHourFormControl.getRawValue() ?? 0;
+    // newLocation.locationX = this.locationXFormControl.getRawValue() ?? 0;
+    // newLocation.locationY = this.locationYFormControl.getRawValue() ?? 0;
 
     this.dialogRef.close({ event: 'Add', data: newLocation });
   }
 
   updateLocation() {
     let newLocation: Location = new Location();
-    newLocation.locationId = this.location.locationId;
-    newLocation.locationName = this.nameFormControl.getRawValue() ?? "";
-    newLocation.address = this.addressFormControl.getRawValue() ?? ""; 
-    newLocation.imageLocation = "location";
-    newLocation.pricePerHour = this.pricePerHourFormControl.getRawValue() ?? 0;
-    newLocation.locationX = this.locationXFormControl.getRawValue() ?? 0;
-    newLocation.locationY = this.locationYFormControl.getRawValue() ?? 0;
+    // newLocation.locationId = this.location.locationId;
+    // newLocation.locationName = this.nameFormControl.getRawValue() ?? "";
+    // newLocation.address = this.addressFormControl.getRawValue() ?? ""; 
+    // newLocation.imageLocation = "location";
+    // newLocation.pricePerHour = this.pricePerHourFormControl.getRawValue() ?? 0;
+    // newLocation.locationX = this.locationXFormControl.getRawValue() ?? 0;
+    // newLocation.locationY = this.locationYFormControl.getRawValue() ?? 0;
     
     this.dialogRef.close({ event: 'Update', data: newLocation });
   }
 
   deleteLocation() {
-    this.dialogRef.close({ event: 'Delete', data: this.location.locationId })
+    // this.dialogRef.close({ event: 'Delete', data: this.location.locationId })
   }
 }

@@ -33,20 +33,20 @@ export class ProfileComponent implements OnInit {
   }
 
   loadMyData() {
-    this.isLoading = true;
+    // this.isLoading = true;
 
-    this.accountService.getMyData().subscribe({
-      next: resp => {
-        this.account = resp;
-        this.getAllReviews();
-        this.getAllBookings();
-        this.isLoading = false;
-      },
-      error: () => {
-        this.notificationService.showErrorNotification("There was a problem loading your data!");
-        this.isLoading = false;
-      }
-    });
+    // this.accountService.getMyData().subscribe({
+    //   next: resp => {
+    //     this.account = resp;
+    //     this.getAllReviews();
+    //     this.getAllBookings();
+    //     this.isLoading = false;
+    //   },
+    //   error: () => {
+    //     this.notificationService.showErrorNotification("There was a problem loading your data!");
+    //     this.isLoading = false;
+    //   }
+    // });
   }
 
   private getAllReviews() {

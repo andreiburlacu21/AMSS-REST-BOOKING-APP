@@ -32,21 +32,21 @@ export class WriteAReviewComponent implements OnInit {
   }
 
   postReview() {
-    let newReview: Review = new Review();
-    newReview.locationId = this.location.locationId;
-    newReview.accountId = this.account.accountId;
-    newReview.grade = this.rating;
-    newReview.description = this.descriptionFormControl.getRawValue() ?? "";
-    newReview.date = new Date().toDateString();
+    // let newReview: Review = new Review();
+    // newReview.locationId = this.location.locationId;
+    // newReview.accountId = this.account.accountId;
+    // newReview.grade = this.rating;
+    // newReview.description = this.descriptionFormControl.getRawValue() ?? "";
+    // newReview.date = new Date().toDateString();
 
-    this.reviewService.addReview(newReview).subscribe({
-      next: () => {
-        this.notificationService.showSuccessNotification("Thank you for your feedback!");
-      },
-      error: err => {
-        this.notificationService.showErrorNotification(err.error);
-        console.log(err);
-      }
-    });
+    // this.reviewService.addReview(newReview).subscribe({
+    //   next: () => {
+    //     this.notificationService.showSuccessNotification("Thank you for your feedback!");
+    //   },
+    //   error: err => {
+    //     this.notificationService.showErrorNotification(err.error);
+    //     console.log(err);
+    //   }
+    // });
   }
 }
