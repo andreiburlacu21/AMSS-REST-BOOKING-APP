@@ -30,10 +30,13 @@ export class AuthenticationService {
   }
 
   isAdmin(): boolean {
+    if (this.getAccessToken() == "NULL") {
+      return false;
+    }
 
-    if (this.getAccessToken() == "NULL") return false;
+    let tokenData = jwtDecode<Token>(this.getAccessToken());
 
-    var tokenData = jwtDecode<Token>(this.getAccessToken());
+    console.log("Token: " + tokenData);
 
     return tokenData['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == Role[Role.Admin];
   }
@@ -41,7 +44,8 @@ export class AuthenticationService {
   getAccessToken(): string {
     const value = localStorage.getItem(this.AUTH);
 
-    if (value !== 'undefined' && value ) {
+    if (value !== 'undefined' && value) {
+      console.log("Returneaza token-ul");
       return (JSON.parse(value) as TokenData).accessToken;
     }
 

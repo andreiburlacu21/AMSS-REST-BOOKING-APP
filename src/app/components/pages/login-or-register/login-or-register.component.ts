@@ -49,7 +49,10 @@ export class LoginOrRegisterComponent {
 
           this.router.navigate([`/home`]);
         }
-      }, error: () => { }
+      }, error: (e) => { 
+        this.isLoading = false;
+        console.log(e);
+      }
     });
   }
 

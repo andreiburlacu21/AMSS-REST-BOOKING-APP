@@ -20,7 +20,6 @@ export class HomeComponent implements OnInit {
   isLoading = false;
   isAdminLoggedIn: boolean = false;
   locationsWithAllDetails: LocationWithAllDetails[] = [];
-  // filteredLocations: Location[] = [];
   bookings: Booking[] = []
   reviews: Review[] = []
   searchInput: string = ""
@@ -36,14 +35,17 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.isAdminLoggedIn = false;
+    // this.isAdminLoggedIn = environment.isAdmin;
+    this.isAdminLoggedIn = true;
 
     if (!this.isAdminLoggedIn) { // load data for user
       this.loadData();
     }
   }
 
-  private loadData() {
+  private loadData() {  
+
+
     // this.isLoading = true;
     // this.locationService.getAllLocations().subscribe({ // get all locations
     //   next: locations => {
