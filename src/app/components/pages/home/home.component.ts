@@ -35,8 +35,7 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.isAdminLoggedIn = environment.isAdmin;
-    this.isAdminLoggedIn = true;
+    this.isAdminLoggedIn = environment.isAdmin;
 
     if (!this.isAdminLoggedIn) { // load data for user
       this.loadData();

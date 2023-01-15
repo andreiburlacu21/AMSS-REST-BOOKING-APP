@@ -32,7 +32,7 @@ export class AppComponent {
       }
     }
 
-    // this.checkIfUserIsLoggedIn(); -> Has error to be checked!
+    this.checkIfUserIsLoggedIn();
   }
 
   @HostListener('document:click', ['$event'])
@@ -73,7 +73,6 @@ export class AppComponent {
   }
 
   userLoggedIn(eventData: { loggedIn: boolean }) {
-    console.log("Executed!");
     if (eventData.loggedIn) {
       this.isUserLoggedId = true;
       

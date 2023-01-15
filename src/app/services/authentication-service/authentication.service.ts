@@ -36,8 +36,6 @@ export class AuthenticationService {
 
     let tokenData = jwtDecode<Token>(this.getAccessToken());
 
-    console.log("Token: " + tokenData);
-
     return tokenData['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == Role[Role.Admin];
   }
 
@@ -45,7 +43,6 @@ export class AuthenticationService {
     const value = localStorage.getItem(this.AUTH);
 
     if (value !== 'undefined' && value) {
-      console.log("Returneaza token-ul");
       return (JSON.parse(value) as TokenData).accessToken;
     }
 
