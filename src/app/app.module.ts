@@ -28,6 +28,12 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { ProfileComponent } from './components/pages/profile/profile.component';
 import { MakeAReservationComponent } from './components/pages/location-page/make-a-reservation/make-a-reservation.component';
 import { TableComponent } from './components/general-components/table/table.component';
+import { RestaurantsComponent } from './components/pages/admin-pages/restaurants/restaurants.component';
+import { MenusComponent } from './components/pages/admin-pages/menus/menus.component';
+import { MenusDialogComponent } from './components/pages/admin-pages/menus/menus-dialog/menus-dialog.component';
+import { RestaurantsDialogComponent } from './components/pages/admin-pages/restaurants/restaurants-dialog/restaurants-dialog.component';
+import { TablesComponent } from './components/pages/admin-pages/tables/tables.component';
+import { TableDialogComponent } from './components/pages/admin-pages/tables/table-dialog/table-dialog.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +57,13 @@ import { TableComponent } from './components/general-components/table/table.comp
     WriteAReviewComponent,
     ProfileComponent,
     MakeAReservationComponent,
-    TableComponent
+    TableComponent,
+    RestaurantsComponent,
+    MenusComponent,
+    MenusDialogComponent,
+    RestaurantsDialogComponent,
+    TablesComponent,
+    TableDialogComponent
   ],
   imports: [
     BrowserModule,

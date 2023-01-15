@@ -13,7 +13,7 @@
             </mat-card-footer>
         </mat-card>
 
-        <mat-card class="card-item hover-underline-animation">
+        <mat-card class="card-item hover-underline-animation" [routerLink]="['/restaurants']">
             <mat-card-content class="content text-center align-items-center mt-5">
                 <mat-icon class="card-icon">
                     restaurant
@@ -25,7 +25,7 @@
             </mat-card-footer>
         </mat-card>
 
-        <mat-card class="card-item hover-underline-animation">
+        <mat-card class="card-item hover-underline-animation" [routerLink]="['/menus']">
             <mat-card-content class="content text-center align-items-center mt-5">
                 <mat-icon class="card-icon">
                     menu_book
@@ -37,7 +37,17 @@
             </mat-card-footer>
         </mat-card>
 
+        <mat-card class="card-item hover-underline-animation" [routerLink]="['/tables']">
+            <mat-card-content class="content text-center align-items-center mt-5">
+                <mat-icon class="card-icon">
+                    table_bar
+                </mat-icon>
+            </mat-card-content>
 
+            <mat-card-footer class="text-center m-2">
+                Tables
+            </mat-card-footer>
+        </mat-card>
 
         <mat-card class="card-item hover-underline-animation" [routerLink]="['/bookings']">
             <mat-card-content class="content text-center align-items-center mt-5">
