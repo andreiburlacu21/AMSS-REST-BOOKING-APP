@@ -1,1 +1,66 @@
-<p>restaurants works!</p>
+<div class="row d-flex justify-content-center">
+    <mat-card class="row col-10 mt-3">
+        <div class="d-flex align-items-center">
+            <button mat-mini-fab color="primary" class="action-fab-btn" [routerLink]="['/home']">
+                <mat-icon> arrow_back </mat-icon>
+            </button>
+            <span class="float-start title">Restaurants</span>
+            <button mat-mini-fab class="action-fab-btn ms-auto add-btn" [disabled]="locationsAreLoading" (click)="addRestaurant()">
+                <mat-icon> add </mat-icon>
+            </button>
+            <span>Add new restaurant</span>
+        </div>
+    </mat-card>
+    <mat-card class="table-container col-10 mt-2">
+        <div *ngIf="restaurants.length === 0 && !isLoading" class="text-center mt-5">
+            <mat-icon class="no-results-icon">folder_off</mat-icon>
+            <p class="text-center title mt-5"> There are no restaurants to be displayed! </p>
+        </div>
+
+        <div *ngIf="isLoading" class="h-100 m-0 p-0 d-flex justify-content-center align-items-center">
+            <mat-spinner class="loading-spinner"></mat-spinner>
+        </div>
+
+        <table *ngIf="restaurants.length > 0" class="table text-center primary-text">
+            <thead>
+                <tr>
+                    <th scope="col"> Name </th>
+                    <th scope="col"> Description </th>
+                    <th scope="col"> Rating </th>
+                    <th scope="col"> locationId</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let restaurant of restaurants" class="align-items-center">
+                    <td class="pt-3">
+                        {{ restaurant.name }}
+                    </td>
+                    <td class="pt-3">
+                        {{ restaurant.description }}
+                    </td>
+                    <td class="pt-3">
+                        {{ restaurant.rating }}
+                    </td>
+                    <td class="pt-3">
+                        {{ restaurant.locationId }}
+                    </td>
+                    <td>
+                        <button mat-mini-fab class="action-fab-btn edit-btn" (click)="editRestaurant(restaurant)">
+                            <mat-icon> edit </mat-icon>
+                        </button>
+                    </td>
+                    <td>
+                        <button mat-mini-fab class="action-fab-btn add-photo-btn" (click)="addImage(restaurant)">
+                            <mat-icon> add_photo_alternate </mat-icon>
+                        </button>
+                    </td>
+                    <td>
+                        <button mat-mini-fab class="action-fab-btn delete-btn" (click)="deleteRestaurant(restaurant)">
+                            <mat-icon> delete </mat-icon>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </mat-card>
+</div>

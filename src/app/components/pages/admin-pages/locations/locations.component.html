@@ -24,9 +24,8 @@
         <table *ngIf="locations.length > 0" class="table text-center primary-text">
             <thead>
                 <tr>
-                    <th scope="col"> Name </th>
+                    <th scope="col"> Id </th>
                     <th scope="col"> Address </th>
-                    <th scope="col"> Price per hour </th>
                     <th scope="col"> X coordinate </th>
                     <th scope="col"> Y coordinate </th>
                     <th></th>
@@ -36,29 +35,21 @@
             </thead>
             <tbody>
                 <tr *ngFor="let location of locations" class="align-items-center">
-                    <!-- <td class="pt-3">
-                        {{ location.locationName }}
+                    <td class="pt-3">
+                        {{ location.id }}
                     </td>
                     <td class="pt-3">
                         {{ location.address }}
                     </td>
                     <td class="pt-3">
-                        {{ location.pricePerHour }}
+                        {{ location.x }}
                     </td>
                     <td class="pt-3">
-                        {{ location.locationX }}
+                        {{ location.y }}
                     </td>
-                    <td class="pt-3">
-                        {{ location.locationY }}
-                    </td> -->
                     <td>
                         <button mat-mini-fab class="action-fab-btn edit-btn" (click)="editLocation(location)">
                             <mat-icon> edit </mat-icon>
-                        </button>
-                    </td>
-                    <td>
-                        <button mat-mini-fab class="action-fab-btn add-photo-btn" (click)="addImage(location)">
-                            <mat-icon> add_photo_alternate </mat-icon>
                         </button>
                     </td>
                     <td>

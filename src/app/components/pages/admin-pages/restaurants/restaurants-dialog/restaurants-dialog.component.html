@@ -1,1 +1,100 @@
-<p>restaurants-dialog works!</p>
+<div class="dialog-container">
+    <h1 mat-dialog-title> {{ action }} location</h1>
+
+    <!-- ADMIN WANTS TO ADD -->
+    <div mat-dialog-content *ngIf="action === 'Add'">
+        <div class="row justify-content-center">
+            <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput required [formControl]="nameFormControl">
+                <mat-error *ngIf="nameFormControl.hasError('required')"> Location name is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Description</mat-label>
+                <input matInput required [formControl]="descriptionFormControl">
+                <mat-error *ngIf="descriptionFormControl.hasError('required')"> Description is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Location</mat-label>
+                <mat-select [formControl]="locationIdFormControl">
+                    <mat-option *ngFor="let location of locations" [value]="location.id" (onSelectionChange)="selectedLocation(location)">
+                        {{ location.address }}
+                    </mat-option>
+                </mat-select>
+                <mat-icon matSuffix>location_on</mat-icon>
+                <mat-error *ngIf="locationIdFormControl.hasError('required')"> Location is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="d-flex" *ngIf="action === 'Add'">
+        <button mat-dialog-close class="primary-action-btn action-btn">Cancel</button>
+        <button class="primary-action-btn action-btn ms-auto" [disabled]="nameFormControl.hasError('required') || 
+        descriptionFormControl.hasError('required')" (click)="addRestaurant()">
+            Add
+        </button>
+    </div>
+
+    <!-- ADMIN WANTS TO UPDATE -->
+    <div mat-dialog-content *ngIf="action === 'Edit'">
+        <div class="row justify-content-center">
+            <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput required [formControl]="nameFormControl">
+                <mat-error *ngIf="nameFormControl.hasError('required')"> Location name is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Description</mat-label>
+                <input matInput required [formControl]="descriptionFormControl">
+                <mat-error *ngIf="descriptionFormControl.hasError('required')"> Description is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="d-flex" *ngIf="action === 'Edit'">
+        <button mat-dialog-close class="primary-action-btn action-btn">Cancel</button>
+        <button class="primary-action-btn action-btn ms-auto" [disabled]="nameFormControl.hasError('required') || 
+        descriptionFormControl.hasError('required')" (click)="updateRestaurant()">
+            Update
+        </button>
+    </div>
+
+    <!-- ADMIN WANTS TO DELETE -->
+    <div mat-dialog-content *ngIf="action === 'Delete'" class="mb-3">
+        <p> Are you sure you want to delete this location? </p>
+        <table>
+            <tbody>
+                <tr>
+                    <td>Name: {{restaurant.id}}</td>
+                </tr>
+                <tr>
+                    <td>Address: {{restaurant.name}}</td>
+                </tr>
+                <tr>
+                    <td>Price per hour: {{restaurant.description}}</td>
+                </tr>
+                <tr>
+                    <td>X coordinate: {{restaurant.rating}}</td>
+                </tr>
+                <tr>
+                    <td>Y coordinate: {{restaurant.locationId}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="d-flex" *ngIf="action === 'Delete'">
+        <button mat-dialog-close class="primary-action-btn action-btn">Cancel</button>
+        <button class="primary-action-btn action-btn ms-auto" (click)="deleteRestaurant()">
+            Yes
+        </button>
+    </div>
+</div>
