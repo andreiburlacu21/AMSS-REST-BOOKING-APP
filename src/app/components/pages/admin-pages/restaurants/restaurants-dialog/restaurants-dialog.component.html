@@ -1,5 +1,5 @@
 <div class="dialog-container">
-    <h1 mat-dialog-title> {{ action }} location</h1>
+    <h1 mat-dialog-title> {{ action }} restaurant</h1>
 
     <!-- ADMIN WANTS TO ADD -->
     <div mat-dialog-content *ngIf="action === 'Add'">
@@ -13,7 +13,7 @@
 
             <mat-form-field appearance="outline">
                 <mat-label>Description</mat-label>
-                <input matInput required [formControl]="descriptionFormControl">
+                <textarea matInput required [formControl]="descriptionFormControl" rows="5"></textarea>
                 <mat-error *ngIf="descriptionFormControl.hasError('required')"> Description is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
@@ -21,7 +21,7 @@
             <mat-form-field appearance="outline">
                 <mat-label>Location</mat-label>
                 <mat-select [formControl]="locationIdFormControl">
-                    <mat-option *ngFor="let location of locations" [value]="location.id" (onSelectionChange)="selectedLocation(location)">
+                    <mat-option *ngFor="let location of locations" [value]="location.locationId" (onSelectionChange)="selectedLocation(location)">
                         {{ location.address }}
                     </mat-option>
                 </mat-select>
@@ -52,7 +52,7 @@
 
             <mat-form-field appearance="outline">
                 <mat-label>Description</mat-label>
-                <input matInput required [formControl]="descriptionFormControl">
+                <textarea matInput required [formControl]="descriptionFormControl" rows="5"></textarea>
                 <mat-error *ngIf="descriptionFormControl.hasError('required')"> Description is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
@@ -69,11 +69,11 @@
 
     <!-- ADMIN WANTS TO DELETE -->
     <div mat-dialog-content *ngIf="action === 'Delete'" class="mb-3">
-        <p> Are you sure you want to delete this location? </p>
+        <p> Are you sure you want to delete this restaurant? </p>
         <table>
             <tbody>
                 <tr>
-                    <td>Name: {{restaurant.id}}</td>
+                    <td>Name: {{restaurant.restaurantId}}</td>
                 </tr>
                 <tr>
                     <td>Address: {{restaurant.name}}</td>

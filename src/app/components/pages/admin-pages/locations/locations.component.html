@@ -24,7 +24,6 @@
         <table *ngIf="locations.length > 0" class="table text-center primary-text">
             <thead>
                 <tr>
-                    <th scope="col"> Id </th>
                     <th scope="col"> Address </th>
                     <th scope="col"> X coordinate </th>
                     <th scope="col"> Y coordinate </th>
@@ -35,9 +34,6 @@
             </thead>
             <tbody>
                 <tr *ngFor="let location of locations" class="align-items-center">
-                    <td class="pt-3">
-                        {{ location.id }}
-                    </td>
                     <td class="pt-3">
                         {{ location.address }}
                     </td>

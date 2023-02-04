@@ -5,7 +5,8 @@
                 <mat-icon> arrow_back </mat-icon>
             </button>
             <span class="float-start title">Restaurants</span>
-            <button mat-mini-fab class="action-fab-btn ms-auto add-btn" [disabled]="locationsAreLoading" (click)="addRestaurant()">
+            <button mat-mini-fab class="action-fab-btn ms-auto add-btn" [disabled]="locationsAreLoading"
+                (click)="addRestaurant()">
                 <mat-icon> add </mat-icon>
             </button>
             <span>Add new restaurant</span>
@@ -35,8 +36,9 @@
                     <td class="pt-3">
                         {{ restaurant.name }}
                     </td>
-                    <td class="pt-3">
-                        {{ restaurant.description }}
+                    <td class="pt-3 prevent-select" matTooltip="{{restaurant.description}}"
+                        [matTooltipPosition]="'below'">
+                        {{ restaurant.description!.substring(0, 80) + "..." }}
                     </td>
                     <td class="pt-3">
                         {{ restaurant.rating }}

@@ -14,7 +14,8 @@
     <div class="menu-option d-flex justify-content-center align-items-center mb-2 hover-underline-animation pe-4" [routerLink]="['/home']">
         <mat-icon class="ms-2" [ngClass]="router.url.includes('/home') || router.url.includes('/location-page') 
         || router.url.includes('/accounts') || router.url.includes('/reviews') || router.url.includes('/bookings')
-        || router.url.includes('/locations') ? 'active-icon-fill' : ''">
+        || router.url.includes('/locations') || router.url.includes('/restaurants') 
+        || router.url.includes('/menus') || router.url.includes('/tables') ? 'active-icon-fill' : ''">
             home
         </mat-icon>
         <button class="menu-btn primary-text"> Home </button>

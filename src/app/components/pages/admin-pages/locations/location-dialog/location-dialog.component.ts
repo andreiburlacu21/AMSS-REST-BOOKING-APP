@@ -48,7 +48,7 @@ export class LocationDialogComponent implements OnInit {
 
   updateLocation() {
     let newLocation: Location = new Location();
-    newLocation.id = this.location.id;
+    newLocation.locationId = this.location.locationId;
     newLocation.address = this.addressFormControl.getRawValue() ?? ""; 
     newLocation.x = this.locationXFormControl.getRawValue() ?? 0;
     newLocation.y = this.locationYFormControl.getRawValue() ?? 0;
@@ -57,6 +57,6 @@ export class LocationDialogComponent implements OnInit {
   }
 
   deleteLocation() {
-    this.dialogRef.close({ event: 'Delete', data: this.location.id })
+    this.dialogRef.close({ event: 'Delete', data: this.location.locationId })
   }
 }

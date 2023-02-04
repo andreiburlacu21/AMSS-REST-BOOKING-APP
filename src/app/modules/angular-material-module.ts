@@ -18,7 +18,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
 import { MatBottomSheetModule, MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
-
+import { MatTooltipModule } from '@angular/material/tooltip'; 
 
 @NgModule ({
     exports: [
@@ -43,7 +43,8 @@ import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-mat
         MatExpansionModule,
         MatBottomSheetModule,
         NgxMatDatetimePickerModule,
-        NgxMatTimepickerModule
+        NgxMatTimepickerModule,
+        MatTooltipModule
     ],
     providers: [
         { provide: MatBottomSheetRef, useValue: {} },

@@ -34,6 +34,7 @@ import { MenusDialogComponent } from './components/pages/admin-pages/menus/menus
 import { RestaurantsDialogComponent } from './components/pages/admin-pages/restaurants/restaurants-dialog/restaurants-dialog.component';
 import { TablesComponent } from './components/pages/admin-pages/tables/tables.component';
 import { TableDialogComponent } from './components/pages/admin-pages/tables/table-dialog/table-dialog.component';
+import { MenuButtomSheetComponent } from './components/pages/admin-pages/menus/menu-buttom-sheet/menu-buttom-sheet.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { TableDialogComponent } from './components/pages/admin-pages/tables/tabl
     MenusDialogComponent,
     RestaurantsDialogComponent,
     TablesComponent,
-    TableDialogComponent
+    TableDialogComponent,
+    MenuButtomSheetComponent
   ],
   imports: [
     BrowserModule,

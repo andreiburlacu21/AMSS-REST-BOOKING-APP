@@ -1,5 +1,5 @@
 export class Restaurant {
-    id?: number;
+    restaurantId?: number;
     name?: string;
     rating?: number;
     description?: string;

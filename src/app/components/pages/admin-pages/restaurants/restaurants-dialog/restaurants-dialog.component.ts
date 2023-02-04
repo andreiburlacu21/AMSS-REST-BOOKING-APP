@@ -46,7 +46,7 @@ export class RestaurantsDialogComponent implements OnInit {
   }
 
   selectedLocation(location: Location) {
-    this.locationIdFormControl.setValue(location.id!!)
+    this.locationIdFormControl.setValue(location.locationId!!)
   }
 
   addRestaurant() {
@@ -61,7 +61,7 @@ export class RestaurantsDialogComponent implements OnInit {
 
   updateRestaurant() {
     let newrestaurant: Restaurant = new Restaurant();
-    newrestaurant.id = this.restaurant.id;
+    newrestaurant.restaurantId = this.restaurant.restaurantId;
     newrestaurant.name = this.nameFormControl.getRawValue() ?? "";
     newrestaurant.rating = 0; 
     newrestaurant.description = this.descriptionFormControl.getRawValue() ?? "";
@@ -71,6 +71,6 @@ export class RestaurantsDialogComponent implements OnInit {
   }
 
   deleteRestaurant() {
-    this.dialogRef.close({ event: 'Delete', data: this.restaurant.id })
+    this.dialogRef.close({ event: 'Delete', data: this.restaurant.restaurantId })
   }
 }

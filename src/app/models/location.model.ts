@@ -1,5 +1,5 @@
 export class Location {
-    id?: number;
+    locationId?: number;
     address?: string;
     x?: number;
     y?: number;

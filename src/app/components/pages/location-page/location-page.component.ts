@@ -69,100 +69,100 @@ export class LocationPageComponent implements OnInit {
 
   ngOnInit(): void {
     // TEMP
-    this.indoorTables.push({
-      id: 1,
-      restaurantId: 1,
-      numberOfSeats: 4,
-      outdoor: false
-    });
+    // this.indoorTables.push({
+    //   id: 1,
+    //   restaurantId: 1,
+    //   numberOfSeats: 4,
+    //   outdoor: false
+    // });
 
-    this.indoorTables.push({
-      id: 2,
-      restaurantId: 1,
-      numberOfSeats: 4,
-      outdoor: false
-    });
+    // this.indoorTables.push({
+    //   id: 2,
+    //   restaurantId: 1,
+    //   numberOfSeats: 4,
+    //   outdoor: false
+    // });
 
-    this.indoorTables.push({
-      id: 3,
-      restaurantId: 1,
-      numberOfSeats: 4,
-      outdoor: false
-    });
+    // this.indoorTables.push({
+    //   id: 3,
+    //   restaurantId: 1,
+    //   numberOfSeats: 4,
+    //   outdoor: false
+    // });
 
-    this.indoorTables.push({
-      id: 4,
-      restaurantId: 1,
-      numberOfSeats: 6,
-      outdoor: false
-    });
+    // this.indoorTables.push({
+    //   id: 4,
+    //   restaurantId: 1,
+    //   numberOfSeats: 6,
+    //   outdoor: false
+    // });
 
-    this.indoorTables.push({
-      id: 5,
-      restaurantId: 1,
-      numberOfSeats: 6,
-      outdoor: false
-    });
+    // this.indoorTables.push({
+    //   id: 5,
+    //   restaurantId: 1,
+    //   numberOfSeats: 6,
+    //   outdoor: false
+    // });
 
 
-    this.outdoorTables.push({
-      id: 6,
-      restaurantId: 1,
-      numberOfSeats: 2,
-      outdoor: true
-    });
+    // this.outdoorTables.push({
+    //   id: 6,
+    //   restaurantId: 1,
+    //   numberOfSeats: 2,
+    //   outdoor: true
+    // });
 
-    this.outdoorTables.push({
-      id: 7,
-      restaurantId: 1,
-      numberOfSeats: 2,
-      outdoor: true
-    });
+    // this.outdoorTables.push({
+    //   id: 7,
+    //   restaurantId: 1,
+    //   numberOfSeats: 2,
+    //   outdoor: true
+    // });
 
-    this.outdoorTables.push({
-      id: 8,
-      restaurantId: 1,
-      numberOfSeats: 2,
-      outdoor: true
-    });
+    // this.outdoorTables.push({
+    //   id: 8,
+    //   restaurantId: 1,
+    //   numberOfSeats: 2,
+    //   outdoor: true
+    // });
 
-    // 1
-    this.location = {
-      id: 1,
-      x: 44.41185902958171,
-      y: 26.118675397630597,
-      address: "Splaiul Unirii 160, București 040041"
-    }
+    // // 1
+    // this.location = {
+    //   id: 1,
+    //   x: 44.41185902958171,
+    //   y: 26.118675397630597,
+    //   address: "Splaiul Unirii 160, București 040041"
+    // }
 
     
 
 
-    this.reviews.push({
-      reviewId: 1,
-      accountId: 1,
-      locationId: 2,
-      grade: 4,
-      description: "Great place!",
-      date: new Date().toDateString(),
-    });
+    // this.reviews.push({
+    //   reviewId: 1,
+    //   accountId: 1,
+    //   locationId: 2,
+    //   grade: 4,
+    //   description: "Great place!",
+    //   date: new Date().toDateString(),
+    // });
 
-    this.reviews.push({
-      reviewId: 2,
-      accountId: 2,
-      locationId: 2,
-      grade: 3,
-      description: "It's ok!",
-      date: new Date().toDateString(),
-    });
+    // this.reviews.push({
+    //   reviewId: 2,
+    //   accountId: 2,
+    //   locationId: 2,
+    //   grade: 3,
+    //   description: "It's ok!",
+    //   date: new Date().toDateString(),
+    // });
 
-    this.reviews.push({
-      reviewId: 2,
-      accountId: 3,
-      locationId: 2,
-      grade: 1,
-      description: "Bad!",
-      date: new Date().toDateString(),
-    });
+    // this.reviews.push({
+    //   reviewId: 2,
+    //   accountId: 3,
+    //   locationId: 2,
+    //   grade: 1,
+    //   description: "Bad!",
+    //   date: new Date().toDateString(),
+    // });
 
     // --- END TEMP
 
