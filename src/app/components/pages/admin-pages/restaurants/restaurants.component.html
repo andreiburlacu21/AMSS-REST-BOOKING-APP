@@ -28,7 +28,7 @@
                     <th scope="col"> Name </th>
                     <th scope="col"> Description </th>
                     <th scope="col"> Rating </th>
-                    <th scope="col"> locationId</th>
+                    <th scope="col"> Location address</th>
                 </tr>
             </thead>
             <tbody>
@@ -44,7 +44,7 @@
                         {{ restaurant.rating }}
                     </td>
                     <td class="pt-3">
-                        {{ restaurant.locationId }}
+                        {{ getLocationAddressForRestaurant(restaurant) }}
                     </td>
                     <td>
                         <button mat-mini-fab class="action-fab-btn edit-btn" (click)="editRestaurant(restaurant)">

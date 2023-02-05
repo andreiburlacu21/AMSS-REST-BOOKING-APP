@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Booking } from 'src/app/models/booking.model';
 import { Review } from 'src/app/models/review.model';
+import { BookingService } from 'src/app/services/booking-service/booking.service';
 import { NotificationService } from 'src/app/services/notification-service/notification.service';
 import { ReviewService } from 'src/app/services/review-service/review.service';
 import { Action } from 'src/app/utils/interceptor/admin-actions';
@@ -14,14 +16,18 @@ import { ReviewDialogComponent } from './review-dialog/review-dialog.component';
 
 export class ReviewsComponent implements OnInit {
   isLoading: boolean = false;
+  bookingsAreLoading: boolean = false;
   reviews: Review[] = [];
+  bookings: Booking[] = [];
 
   constructor(private readonly reviewsService: ReviewService,
+    private readonly bookingService: BookingService,
     private readonly notificationService: NotificationService,
     private readonly dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getAllReviews();
+    this.getAllBookings();
   }
 
   private getAllReviews() {
@@ -30,28 +36,29 @@ export class ReviewsComponent implements OnInit {
     this.reviewsService.getAllReviews().subscribe({
       next: resp => {
         this.reviews = resp;
-        let reviewsLoaded: number = 0;
-        this.reviews.forEach(review => {
-          this.reviewsService.getReviewEntityById(review.reviewId!!).subscribe({
-            next: resp => {
-              review.reviewEntity = resp;
-              reviewsLoaded++;
-
-              if(reviewsLoaded === this.reviews.length) {
-                this.isLoading = false;
-              }
-            },
-            error: () => {
-              this.isLoading = false;
-              this.notificationService.showErrorNotification("There was an error while a review's data!");
-            }
-          });
-        });
+        this.isLoading = false;
+        console.log(this.reviews);
 
       },
       error: () => {
         this.isLoading = false;
         this.notificationService.showErrorNotification("There was an error while loading the reviews!");
+      }
+    });
+  }
+
+  private getAllBookings() {
+    this.bookingsAreLoading = true;
+
+    this.bookingService.getAllBookings().subscribe({
+      next: resp => {
+        this.bookings = resp;
+        this.bookingsAreLoading = false;
+      },
+      error: err => {
+        console.log(err);
+        this.bookingsAreLoading = false;
+        this.notificationService.showErrorNotification("There was an error while loading all the bookings!");
       }
     });
   }

@@ -25,6 +25,7 @@
         <table *ngIf="menus.length > 0" class="table text-center primary-text">
             <thead>
                 <tr>
+                    <th scope="col"> No </th>
                     <th scope="col"> Restaurant </th>
                     <th scope="col"> Menu </th>
                     <th></th>
@@ -32,7 +33,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let menu of menus" class="align-items-center">
+                <tr *ngFor="let menu of menus; index as i" class="align-items-center">
+                    <td class="pt-3">{{ i + 1 }}</td>
                     <td class="pt-3">
                         {{ getRestaurantOfTheMenu(menu.restaurantId!!)?.name }}
                     </td>

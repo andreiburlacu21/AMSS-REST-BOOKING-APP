@@ -1,1 +1,111 @@
-<p>table-dialog works!</p>
+<div class="dialog-container">
+    <h1 mat-dialog-title> {{ action }} table</h1>
+
+    <!-- ADMIN WANTS TO ADD -->
+    <div mat-dialog-content *ngIf="action === 'Add'">
+        <div class="row justify-content-center">
+            <mat-form-field appearance="outline">
+                <mat-label>Restaurant</mat-label>
+                <mat-select [formControl]="restaurantIdFormControl">
+                    <mat-option *ngFor="let restaurant of restaurants" [value]="restaurant.restaurantId"
+                        (onSelectionChange)="selectedRestaurant(restaurant)">
+                        {{ restaurant.name }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="restaurantIdFormControl.hasError('required')"> Restaurant is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Number of seats</mat-label>
+                <input matInput type="number" required [formControl]="numberOfSeatsFormControl">
+                <mat-error *ngIf="numberOfSeatsFormControl.hasError('min')"> Table's number of seats must be at least 1
+                </mat-error>
+                <mat-error *ngIf="numberOfSeatsFormControl.hasError('max')"> Table's number of seats must be at most 15
+                </mat-error>
+            </mat-form-field>
+
+
+            <section class="mb-4">
+                <mat-checkbox class="ms-1" color="primary" [(ngModel)]="isAnOutdoorsTable">Outdoor table</mat-checkbox>
+            </section>
+
+        </div>
+    </div>
+
+    <div class="d-flex" *ngIf="action === 'Add'">
+        <button mat-dialog-close class="primary-action-btn action-btn">Cancel</button>
+        <button class="primary-action-btn action-btn ms-auto" [disabled]="restaurantIdFormControl.hasError('required') || 
+        numberOfSeatsFormControl.hasError('required') || numberOfSeatsFormControl.hasError('min')
+        || numberOfSeatsFormControl.hasError('max')" (click)="addTable()">
+            Add
+        </button>`
+    </div>
+
+    <!-- ADMIN WANTS TO UPDATE -->
+    <div mat-dialog-content *ngIf="action === 'Edit'">
+        <div class="row justify-content-center">
+            <mat-form-field appearance="outline">
+                <mat-label>Table</mat-label>
+                <mat-select [formControl]="restaurantIdFormControl">
+                    <mat-option *ngFor="let restaurant of restaurants" [value]="restaurant.restaurantId"
+                        (onSelectionChange)="selectedRestaurant(restaurant)">
+                        {{ restaurant.name }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="restaurantIdFormControl.hasError('required')"> Restaurant is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Number of seats</mat-label>
+                <input matInput type="number" required [formControl]="numberOfSeatsFormControl">
+                <mat-error *ngIf="numberOfSeatsFormControl.hasError('required')"> Table number of seats is
+                    <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <section class="mb-4">
+                <mat-checkbox class="ms-1" color="primary" [(ngModel)]="isAnOutdoorsTable">Outdoors</mat-checkbox>
+            </section>
+
+        </div>
+    </div>
+
+    <div class="d-flex" *ngIf="action === 'Edit'">
+        <button mat-dialog-close class="primary-action-btn action-btn">Cancel</button>
+        <button class="primary-action-btn action-btn ms-auto" [disabled]="restaurantIdFormControl.hasError('required') || 
+        numberOfSeatsFormControl.hasError('required') || numberOfSeatsFormControl.hasError('min')
+        || numberOfSeatsFormControl.hasError('max')" (click)="updateTable()">
+            Update
+        </button>
+    </div>
+
+    <!-- ADMIN WANTS TO DELETE -->
+    <div mat-dialog-content *ngIf="action === 'Delete'" class="mb-3">
+        <p> Are you sure you want to delete this table? </p>
+        <table>
+            <tbody>
+                <tr>
+                    <td>Restaurant: {{ getRestaurantNameFromId(table.restaurantId!!) }}</td>
+                </tr>
+                <tr>
+                    <td>NumberOfSeats: {{table.numberOfSeats}}</td>
+                </tr>
+                <tr>
+                    <td>
+                        <section>
+                            <mat-checkbox color="primary" [(ngModel)]="isAnOutdoorsTable">Outdoors</mat-checkbox>
+                        </section>
+                    </td>
+                </tr>
+        </table>
+    </div>
+
+    <div class="d-flex" *ngIf="action === 'Delete'">
+        <button mat-dialog-close class="primary-action-btn action-btn">Cancel</button>
+        <button class="primary-action-btn action-btn ms-auto" (click)="deleteTable()">
+            Yes
+        </button>
+    </div>
+</div>

@@ -46,7 +46,7 @@ export class ReviewDialogComponent implements OnInit {
     if(this.action !== Action.ADD && this.review.reviewId) {
       this.reviewService.getReviewEntityById(this.review.reviewId).subscribe({
         next: resp => {
-          this.review.reviewEntity = resp;
+          // this.review.reviewEntity = resp;
         },
         error: () => {
           this.notificationService.showErrorNotification("There was an error while loading this review information!");
@@ -62,21 +62,21 @@ export class ReviewDialogComponent implements OnInit {
     }
 
     if (this.action === Action.UPDATE) {
-      this.accountIdFormControl.setValue(this.review.accountId!!);
-      this.locationIdFormControl.setValue(this.review.locationId!!);
+      // this.accountIdFormControl.setValue(this.review.accountId!!);
+      // this.locationIdFormControl.setValue(this.review.locationId!!);
       this.gradeFormControl.setValue(this.review.grade!!);
       this.descriptionFormControl.setValue(this.review.description!!);
-      this.dateFormControl.setValue(new Date(this.review.date!!));
+      // this.dateFormControl.setValue(new Date(this.review.date!!));
     }
   }
 
   addReview() {
     let newReview: Review = new Review();
-    newReview.accountId = this.accountIdFormControl.getRawValue() ?? 0;
-    newReview.locationId = this.locationIdFormControl.getRawValue() ?? 0;
+    // newReview.accountId = this.accountIdFormControl.getRawValue() ?? 0;
+    // newReview.locationId = this.locationIdFormControl.getRawValue() ?? 0;
     newReview.grade = this.gradeFormControl.getRawValue() ?? 0;
     newReview.description = this.descriptionFormControl.getRawValue() ?? "";
-    newReview.date = this.dateFormControl.getRawValue()?.toDateString();
+    // newReview.date = this.dateFormControl.getRawValue()?.toDateString();
 
     this.dialogRef.close({ event: 'Add', data: newReview });
   }
@@ -84,11 +84,11 @@ export class ReviewDialogComponent implements OnInit {
   updateReview() {
     let newReview: Review = new Review();
     newReview.reviewId = this.review.reviewId;
-    newReview.accountId = this.accountIdFormControl.getRawValue() ?? 0;
-    newReview.locationId = this.locationIdFormControl.getRawValue() ?? 0;
+    // newReview.accountId = this.accountIdFormControl.getRawValue() ?? 0;
+    // newReview.locationId = this.locationIdFormControl.getRawValue() ?? 0;
     newReview.grade = this.gradeFormControl.getRawValue() ?? 0;
     newReview.description = this.descriptionFormControl.getRawValue() ?? "";
-    newReview.date = this.descriptionFormControl.getRawValue as unknown as string ?? "";
+    // newReview.date = this.descriptionFormControl.getRawValue as unknown as string ?? "";
 
     this.dialogRef.close({ event: 'Update', data: newReview });
   }

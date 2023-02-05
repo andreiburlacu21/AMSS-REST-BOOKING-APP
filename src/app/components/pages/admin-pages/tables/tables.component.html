@@ -1,1 +1,62 @@
-<p>tables works!</p>
+<div class="row d-flex justify-content-center">
+    <mat-card class="row col-10 mt-3">
+        <div class="d-flex align-items-center">
+            <button mat-mini-fab color="primary" class="action-fab-btn" [routerLink]="['/home']">
+                <mat-icon> arrow_back </mat-icon>
+            </button>
+            <span class="float-start title">Tables</span>
+            <button mat-mini-fab class="action-fab-btn ms-auto add-btn" 
+            [disabled]="restaurantsAreLoading || isLoading" (click)="addTable()">
+                <mat-icon> add </mat-icon>
+            </button>
+            <span>Add new table</span>
+        </div>
+    </mat-card>
+    <mat-card class="table-container col-10 mt-2">
+        <div *ngIf="tables.length === 0 && !isLoading" class="text-center mt-5">
+            <mat-icon class="no-results-icon">folder_off</mat-icon>
+            <p class="text-center title mt-5"> There are no tables to be displayed! </p>
+        </div>
+
+        <div *ngIf="isLoading || restaurantsAreLoading" class="h-100 m-0 p-0 d-flex justify-content-center align-items-center">
+            <mat-spinner class="loading-spinner"></mat-spinner>
+        </div>
+
+        <table *ngIf="tables.length > 0" class="table text-center primary-text">
+            <thead>
+                <tr>
+                    <th scope="col"> No </th>
+                    <th scope="col"> Restaurant Name </th>
+                    <th scope="col"> Number of seats </th>
+                    <th scope="col"> Outdoors </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let table of tables; index as i" class="align-items-center">
+                    <td class="pt-3">{{ i + 1 }}</td>
+                    <td class="pt-3">
+                        {{ getRestaurantNameOfTheTable(table.restaurantId!!) }}
+                    </td>
+                    <td class="pt-3">
+                        {{ table.numberOfSeats }}
+                    </td>
+                    <td class="pt-3">
+                        {{ table.outdoor ? "Yes" : "No" }}
+                    </td>
+                    <td>
+                        <button mat-mini-fab class="action-fab-btn edit-btn" (click)="editTable(table)">
+                            <mat-icon> edit </mat-icon>
+                        </button>
+                    </td>
+                    <td>
+                        <button mat-mini-fab class="action-fab-btn delete-btn" (click)="deleteTable(table)">
+                            <mat-icon> delete </mat-icon>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </mat-card>
+</div>

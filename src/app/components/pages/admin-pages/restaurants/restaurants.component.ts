@@ -59,6 +59,16 @@ export class RestaurantsComponent implements OnInit {
     });
   }
 
+  getLocationAddressForRestaurant(restaurant: Restaurant): string {
+    let location = this.locations.find(loc => loc.locationId === restaurant.locationId);
+    
+    if(location) {
+      return location.address!!;
+    }
+      
+    return "Unknown";
+  } 
+
   addRestaurant() {
     let dialogRef = this.dialog.open(RestaurantsDialogComponent, {
       width: '500px',

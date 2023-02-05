@@ -143,10 +143,10 @@ export class HomeComponent implements OnInit {
     let totalScore: number = 0;
 
     this.reviews.forEach(review => {
-      if (review.locationId === locationId) {
-        totalScore += review.grade!!;
-        reviewsForThisLocation.push(review);
-      }
+      // if (review.locationId === locationId) {
+      //   totalScore += review.grade!!;
+      //   reviewsForThisLocation.push(review);
+      // }
     });
 
     if (reviewsForThisLocation.length === 0) {

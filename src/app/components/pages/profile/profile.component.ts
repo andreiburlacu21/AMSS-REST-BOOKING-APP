@@ -53,12 +53,12 @@ export class ProfileComponent implements OnInit {
     this.reviewsAreLoading = true;
     this.reviewService.getAllReviews().subscribe({
       next: resp => {
-        this.myReviews = resp.filter(review => review.accountId === this.account.accountId);
+        // this.myReviews = resp.filter(review => review.accountId === this.account.accountId);
         let reviewsLoaded: number = 0;
         this.myReviews.forEach(review => {
           this.reviewService.getReviewEntityById(review.reviewId!!).subscribe({
             next: resp => {
-              review.reviewEntity = resp;
+              // review.reviewEntity = resp;
               reviewsLoaded++;
 
               if(reviewsLoaded === this.myReviews.length) {

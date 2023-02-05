@@ -1,5 +1,5 @@
 export class Table {
-    id?: number;
+    tableId?: number;
     restaurantId?: number;
     numberOfSeats?: number;
     outdoor?: boolean;
