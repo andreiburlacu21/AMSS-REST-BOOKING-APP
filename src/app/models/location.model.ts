@@ -1,6 +1,6 @@
 export class Location {
     locationId?: number;
     address?: string;
-    x?: number;
-    y?: number;
+    x!: number;
+    y!: number;
 }

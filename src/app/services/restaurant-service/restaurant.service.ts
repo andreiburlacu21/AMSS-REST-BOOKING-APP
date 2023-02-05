@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { RestaurantWithAllDetails } from 'src/app/models/restaurant-with-all-details.model';
 import { Restaurant } from 'src/app/models/restaurant.model';
 import { environment } from 'src/environments/environment';
 
@@ -18,6 +19,10 @@ export class RestaurantService {
     return this.httpClient.get<Restaurant[]>(this.reqPath + "/all");
   }
 
+  getRestaurantWithAllDetails(id: number): Observable<RestaurantWithAllDetails> {
+    return this.httpClient.get<RestaurantWithAllDetails>(this.reqPath + "/Entity/" + id);
+  }
+ 
   addRestaurant(restaurant: Restaurant): Observable<Restaurant> {
     return this.httpClient.post<Restaurant>(this.reqPath + "/insert", restaurant);
   }

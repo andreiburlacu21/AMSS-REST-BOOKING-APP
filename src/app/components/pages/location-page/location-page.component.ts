@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { MatBottomSheet, MatBottomSheetConfig, MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Account } from 'src/app/models/account.model';
-import { Location } from 'src/app/models/location.model';
+import { RestaurantWithAllDetails } from 'src/app/models/restaurant-with-all-details.model';
 import { Restaurant } from 'src/app/models/restaurant.model';
 import { Review } from 'src/app/models/review.model';
 import { Table } from 'src/app/models/table.model';
 import { AccountService } from 'src/app/services/account-service/account.service';
 import { ImageService } from 'src/app/services/image-service/image.service';
 import { NotificationService } from 'src/app/services/notification-service/notification.service';
+import { RestaurantService } from 'src/app/services/restaurant-service/restaurant.service';
 import { ReviewService } from 'src/app/services/review-service/review.service';
 import { environment } from 'src/environments/environment';
-import { MakeAReservationComponent } from './make-a-reservation/make-a-reservation.component';
 import { WriteAReviewComponent } from './write-a-review/write-a-review.component';
 
 @Component({
@@ -22,36 +22,28 @@ import { WriteAReviewComponent } from './write-a-review/write-a-review.component
   styleUrls: ['./location-page.component.scss']
 })
 export class LocationPageComponent implements OnInit {
-  isLoading: boolean = true;
+  isLoading: boolean = false;
   loggedInAccount: Account = new Account();
-  // location: Location;
   images: string[] = [];
   reviews: Review[] = [];
   imageObject: Object[] = [];
   restaurant: Restaurant = new Restaurant();
-  location: Location = new Location();
+  restaurantDetails: RestaurantWithAllDetails = new RestaurantWithAllDetails();
   inDateFormControl = new FormControl(new Date(), [Validators.required]);
   outDateFormControl = new FormControl(new Date(), [Validators.required]);
   dateClass: any;
-
   center: google.maps.LatLngLiteral = {
-    lat: environment.locationX,
-    lng: environment.locationY
+    lat: Number(environment.locationX),
+    lng: Number(environment.locationY)
   };
-
   markerOptions: google.maps.MarkerOptions = {
     draggable: false
   };
-
   markerPosition: google.maps.LatLngLiteral = {
-    lat: environment.locationX,
-    lng: environment.locationY
+    lat: Number(environment.locationX),
+    lng: Number(environment.locationY)
   }
-
   zoom = 17;
-
-  // MOCK DATA
-
   indoorTables: Table[] = [];
   outdoorTables: Table[] = [];
 
@@ -62,167 +54,38 @@ export class LocationPageComponent implements OnInit {
     private accountService: AccountService,
     private bottomSheetRef: MatBottomSheetRef<WriteAReviewComponent>,
     private readonly dialog: MatDialog,
+    private readonly restaurantService: RestaurantService,
     private readonly notificationService: NotificationService) {
-    this.restaurant = this.router.getCurrentNavigation()!.extras.state!;
+      this.restaurant = this.router.getCurrentNavigation()!.extras.state!;
+      console.log(this.restaurant);
+    }
 
+  ngOnInit() {
+    this.getRestaurantAllDetails();
   }
 
-  ngOnInit(): void {
-    // TEMP
-    // this.indoorTables.push({
-    //   id: 1,
-    //   restaurantId: 1,
-    //   numberOfSeats: 4,
-    //   outdoor: false
-    // });
-
-    // this.indoorTables.push({
-    //   id: 2,
-    //   restaurantId: 1,
-    //   numberOfSeats: 4,
-    //   outdoor: false
-    // });
-
-    // this.indoorTables.push({
-    //   id: 3,
-    //   restaurantId: 1,
-    //   numberOfSeats: 4,
-    //   outdoor: false
-    // });
-
-    // this.indoorTables.push({
-    //   id: 4,
-    //   restaurantId: 1,
-    //   numberOfSeats: 6,
-    //   outdoor: false
-    // });
-
-    // this.indoorTables.push({
-    //   id: 5,
-    //   restaurantId: 1,
-    //   numberOfSeats: 6,
-    //   outdoor: false
-    // });
-
-
-    // this.outdoorTables.push({
-    //   id: 6,
-    //   restaurantId: 1,
-    //   numberOfSeats: 2,
-    //   outdoor: true
-    // });
-
-    // this.outdoorTables.push({
-    //   id: 7,
-    //   restaurantId: 1,
-    //   numberOfSeats: 2,
-    //   outdoor: true
-    // });
-
-    // this.outdoorTables.push({
-    //   id: 8,
-    //   restaurantId: 1,
-    //   numberOfSeats: 2,
-    //   outdoor: true
-    // });
-
-    // // 1
-    // this.location = {
-    //   id: 1,
-    //   x: 44.41185902958171,
-    //   y: 26.118675397630597,
-    //   address: "Splaiul Unirii 160, București 040041"
-    // }
-
-    
-
-
-    // this.reviews.push({
-    //   reviewId: 1,
-    //   accountId: 1,
-    //   locationId: 2,
-    //   grade: 4,
-    //   description: "Great place!",
-    //   date: new Date().toDateString(),
-    // });
-
-    // this.reviews.push({
-    //   reviewId: 2,
-    //   accountId: 2,
-    //   locationId: 2,
-    //   grade: 3,
-    //   description: "It's ok!",
-    //   date: new Date().toDateString(),
-    // });
-
-    // this.reviews.push({
-    //   reviewId: 2,
-    //   accountId: 3,
-    //   locationId: 2,
-    //   grade: 1,
-    //   description: "Bad!",
-    //   date: new Date().toDateString(),
-    // });
-
-    // --- END TEMP
-
-    // if (this.location) {
-    //   this.getLocationData();
-    // }
-
-    // this.accountService.getMyData().subscribe({
-    //   next: resp => {
-    //     this.loggedInAccount = resp;
-    //   },
-    //   error: () => {
-
-    //   }
-    // });
-  }
-
-  private getLocationData() {
+  private getRestaurantAllDetails() {
     this.isLoading = true;
-    // this.imageService.getImages("location", this.location.locationId!).subscribe({
-    //   next: images => {
-    //     this.images = images;
-    //     this.images.forEach(imgSource => {
-    //       this.imageObject.push({
-    //         image: imgSource,
-    //         thumbImage: imgSource
-    //       });
-    //     });
+    this.imageService.getImages("location", this.restaurant.restaurantId!).subscribe({
+      next: images => {
+        this.images = images;
+        this.images.forEach(imgSource => {
+          console.log(imgSource.replace("https:", ""));
+          this.imageObject.push({
+            image: imgSource.replace("https:", ""),
+            thumbImage: imgSource.replace("https:", "")
+          });
+        });
 
-    //     this.getReviews();
-    //   },
-    //   error: () => {
-    //     this.isLoading = false;
-    //   }
-    // });
+        console.log(this.imageObject);
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+      }
+    });
   }
 
-  private getReviews() {
-    // this.isLoading = true;
-    // this.reviewService.getAllReviews().subscribe({
-    //   next: reviews => {
-    //     this.reviews = reviews.filter(review => review.locationId === this.location.locationId);
-    //     this.isLoading = false;
-    //     this.reviews.forEach(review => {
-    //       this.reviewService.getReviewEntityById(review.reviewId!).subscribe({
-    //         next: resp => {
-    //           review.reviewEntity = resp;
-    //           this.isLoading = false;
-    //         },
-    //         error: () => {
-
-    //         }
-    //       });
-    //     });
-    //   },
-    //   error: () => {
-    //     this.isLoading = false;
-    //   }
-    // });
-  }
 
   zoomImage() {
     environment.hideSidenav = true;

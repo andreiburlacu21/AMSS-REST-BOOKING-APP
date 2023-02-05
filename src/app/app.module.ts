@@ -19,7 +19,7 @@ import { AccountDialogComponent } from './components/pages/admin-pages/accounts/
 import { BookingDialogComponent } from './components/pages/admin-pages/bookings/booking-dialog/booking-dialog.component';
 import { LocationDialogComponent } from './components/pages/admin-pages/locations/location-dialog/location-dialog.component';
 import { ReviewDialogComponent } from './components/pages/admin-pages/reviews/review-dialog/review-dialog.component';
-import { ImageDialogComponent } from './components/pages/admin-pages/locations/image-dialog/image-dialog.component';
+import { ImageDialogComponent } from './components/pages/admin-pages/restaurants/image-dialog/image-dialog.component';
 import { StarRatingComponent } from './components/general-components/star-rating/star-rating.component';
 import { LocationPageComponent } from './components/pages/location-page/location-page.component';
 import { NgImageSliderModule } from 'ng-image-slider';

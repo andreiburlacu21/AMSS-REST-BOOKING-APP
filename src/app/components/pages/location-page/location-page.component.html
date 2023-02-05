@@ -6,7 +6,7 @@
             <button mat-mini-fab color="primary" class="action-fab-btn me-3" [routerLink]="['/home']">
                 <mat-icon> arrow_back </mat-icon>
             </button>
-            <span class="float-start title">{{restaurant.name}}</span>
+            <span class="float-start title">{{restaurant.name!}}</span>
             <app-star-rating *ngIf="!isLoading" [rating]="3"
                 [readonly]="true" class="ms-auto"></app-star-rating>
         </div>
@@ -25,7 +25,7 @@
         <div class="d-flex align-items-center">
             <mat-card-title class="pb-2 ms-2">Details</mat-card-title>
         </div>
-        <p> <span class="me-2 ms-2">Address: </span> {{location.address}} </p>
+        <p> <span class="me-2 ms-2">Address: </span> {{restaurantDetails.location?.address}} </p>
         <p> <span class="me-2 ms-2">Description: </span> {{restaurant.description}}  </p>
     </mat-card>
 
@@ -86,7 +86,7 @@
 
     <mat-card class="col-10 mt-2">
         <mat-card-title class="pb-2 ms-2">Location</mat-card-title>
-        <mat-card-content class="img-container d-flex justify-content-center mt-4 ms-5 me-5">
+        <mat-card-content *ngIf="!isLoading" class="img-container d-flex justify-content-center mt-4 ms-5 me-5">
             <google-map height="400px" width="1050px" [center]="center" [zoom]="zoom">
                 <map-marker [position]="center" [options]="markerOptions"></map-marker>
             </google-map>

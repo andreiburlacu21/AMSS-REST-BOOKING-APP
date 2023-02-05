@@ -10,7 +10,7 @@ import { NotificationService } from 'src/app/services/notification-service/notif
 })
 
 export class ImageDialogComponent {
-  uploadedImage!: File;
+  uploadedRestaurantImage!: File;
   imageSelected: boolean = false;
   formData = new FormData()
 
@@ -19,15 +19,15 @@ export class ImageDialogComponent {
   private notificationService: NotificationService) { }
 
   uploadFile(event: any) {
-    this.uploadedImage = event.target.files[0];
+    this.uploadedRestaurantImage = event.target.files[0];
     this.imageSelected = true;
   }
 
   uploadImage() {
     const formData = new FormData();
     
-    formData.append("file", this.uploadedImage);
-    formData.append("id", this.data.location.locationId);
+    formData.append("file", this.uploadedRestaurantImage);
+    formData.append("id", this.data.restaurant.restaurantId);
     formData.append("type", "location");
 
     this.imageService.uploadImage(formData).subscribe({
@@ -35,6 +35,7 @@ export class ImageDialogComponent {
         this.notificationService.showSuccessNotification("Image uploaded!");
       },
       error: err => {
+        console.log(err);
         this.notificationService.showErrorNotification("Upload failed!");
       }
     });

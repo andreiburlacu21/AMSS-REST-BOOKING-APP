@@ -5,9 +5,10 @@ import { NotificationService } from 'src/app/services/notification-service/notif
 import { RestaurantService } from 'src/app/services/restaurant-service/restaurant.service';
 import { RestaurantsDialogComponent } from './restaurants-dialog/restaurants-dialog.component';
 import { Action } from 'src/app/utils/interceptor/admin-actions';
-import { ImageDialogComponent } from '../locations/image-dialog/image-dialog.component';
+
 import { LocationService } from 'src/app/services/location-service/location.service';
 import { Location } from 'src/app/models/location.model';
+import { ImageDialogComponent } from './image-dialog/image-dialog.component';
 
 @Component({
   selector: 'app-restaurants',

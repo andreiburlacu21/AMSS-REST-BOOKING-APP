@@ -7,6 +7,8 @@ import { Restaurant } from 'src/app/models/restaurant.model';
 import { Review } from 'src/app/models/review.model';
 import { BookingService } from 'src/app/services/booking-service/booking.service';
 import { LocationService } from 'src/app/services/location-service/location.service';
+import { NotificationService } from 'src/app/services/notification-service/notification.service';
+import { RestaurantService } from 'src/app/services/restaurant-service/restaurant.service';
 import { ReviewService } from 'src/app/services/review-service/review.service';
 import { environment } from 'src/environments/environment';
 
@@ -18,6 +20,7 @@ import { environment } from 'src/environments/environment';
 
 export class HomeComponent implements OnInit {
   isLoading = false;
+  locationsAreLoading = false;
   isAdminLoggedIn: boolean = false;
   locationsWithAllDetails: LocationWithAllDetails[] = [];
   bookings: Booking[] = []
@@ -31,7 +34,9 @@ export class HomeComponent implements OnInit {
     private readonly locationService: LocationService,
     private readonly bookingService: BookingService,
     private readonly reviewService: ReviewService,
-    private readonly router: Router
+    private readonly restaurantService: RestaurantService,
+    private readonly router: Router,
+    private readonly notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -43,7 +48,31 @@ export class HomeComponent implements OnInit {
   }
 
   private loadData() {  
+    this.isLoading = true;
+    this.restaurantService.getAllRestaurants().subscribe({
+      next: resp => {
+        this.restaurants = resp;
+        this.filteredRestaurants = this.restaurants;
+        this.isLoading = false;
+      },
+      error: err => {
+        console.log(err);
+        this.notificationService.showErrorNotification("There was an error while loading existing restaurants!");
+      }
+    });
 
+    this.locationsAreLoading = true;
+    this.locationService.getAllLocations().subscribe({
+      next: resp => {
+        this.locations = resp;
+        this.locationsAreLoading = false;
+      },
+      error: err => {
+        console.log(err);
+        this.notificationService.showErrorNotification("Error while loading locations!");
+        this.locationsAreLoading = false;
+      }
+    });
 
     // this.isLoading = true;
     // this.locationService.getAllLocations().subscribe({ // get all locations
@@ -74,60 +103,6 @@ export class HomeComponent implements OnInit {
     //     this.isLoading = false;
     //   }
     // });
-
-
-    // // 1
-    // this.restaurants.push({
-    //   id: 1,
-    //   name: "Open Gastrobar",
-    //   rating: 4,
-    //   description: "Beautiful terrace and very friendly and nice staff. You can enjoy watching the sunset while eating dinner here." +
-    //   "The menu has a lot of variety, with a little bit of every type of cuisine.",
-    //   locationId: 1
-    // });
-
-    // this.locations.push({
-    //   id: 1,
-    //   x: 44.41185902958171,
-    //   y: 26.118675397630597,
-    //   address: "Splaiul Unirii 160, București 040041"
-    // });
-
-
-    // // 2
-    // this.restaurants.push({
-    //   id: 2,
-    //   name: "Noeme",
-    //   rating: 5,
-    //   description: "The kind of place you wish were more of.",
-    //   locationId: 2
-    // });
-
-    // this.locations.push({
-    //   id: 2,
-    //   x: 44.4278014722162,
-    //   y: 26.11522476879475,
-    //   address: "Strada Anton Pann 29, București 030796"
-    // });
-
-
-    // // 3
-    // this.restaurants.push({
-    //   id: 3,
-    //   name: "Resto Aperto",
-    //   rating: 2,
-    //   description: "Aperto is a nice location situated right at the mall entrance.",
-    //   locationId: 3
-    // });
-
-    // this.locations.push({
-    //   id: 3,
-    //   x: 44.41968671111673,
-    //   y: 26.126780155303663,
-    //   address: "Calea Vitan 55-59, București 031282"
-    // });
-
-    // this.filteredRestaurants = this.restaurants;
   }
 
   search() {
@@ -171,8 +146,9 @@ export class HomeComponent implements OnInit {
   }
 
   seeMore(restaurant: Restaurant) {
-    environment.locationX = this.getLocationByRestaurantId(restaurant)?.x!!;
-    environment.locationY = this.getLocationByRestaurantId(restaurant)?.y!!;
+    let restaurantLocation = this.locations.find(loc => loc.locationId === restaurant.locationId);
+    environment.locationX = restaurantLocation?.x!;
+    environment.locationY = restaurantLocation?.y!;
     this.router.navigateByUrl('/location-page', { state: restaurant});
   }
 }
