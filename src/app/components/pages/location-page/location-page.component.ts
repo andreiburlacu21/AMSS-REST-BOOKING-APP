@@ -69,11 +69,12 @@ export class LocationPageComponent implements OnInit {
     this.imageService.getImages("location", this.restaurant.restaurantId!).subscribe({
       next: images => {
         this.images = images;
+        console.log(images);
         this.images.forEach(imgSource => {
-          console.log(imgSource.replace("https:", ""));
+         
           this.imageObject.push({
-            image: imgSource.replace("https:", ""),
-            thumbImage: imgSource.replace("https:", "")
+            image: imgSource,
+            thumbImage: imgSource
           });
         });
 
