@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { AccountEntityDto } from 'src/app/models/account-entity.model';
 import { Account } from 'src/app/models/account.model';
 import { environment } from 'src/environments/environment';
 
@@ -19,8 +20,8 @@ export class AccountService {
     return this.httpClient.get<Account[]>(this.reqPath + "/all");
   }
 
-  getMyData(): Observable<Account> {
-    return this.httpClient.get<Account>(this.reqPath + "/myProfile");
+  getMyData(): Observable<AccountEntityDto> {
+    return this.httpClient.get<AccountEntityDto>(this.reqPath + "/myProfile");
   }
 
   addAccount(account: Account): Observable<Account> {

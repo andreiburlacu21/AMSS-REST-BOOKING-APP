@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AccountEntityDto } from 'src/app/models/account-entity.model';
 import { Account } from 'src/app/models/account.model';
 import { Booking } from 'src/app/models/booking.model';
 import { Review } from 'src/app/models/review.model';
@@ -16,7 +17,7 @@ export class ProfileComponent implements OnInit {
   isLoading: boolean = false;
   reviewsAreLoading: boolean = false;
   bookingsAreLoading: boolean = false;
-  account: Account = new Account();
+  account: AccountEntityDto = new AccountEntityDto();
   userWantsToUpdate: boolean = false;
   myReviews: Review[] = [];
   myBookings: Booking[] = [];
@@ -33,79 +34,50 @@ export class ProfileComponent implements OnInit {
   }
 
   loadMyData() {
-    // this.isLoading = true;
+    this.isLoading = true;
 
-    // this.accountService.getMyData().subscribe({
-    //   next: resp => {
-    //     this.account = resp;
-    //     this.getAllReviews();
-    //     this.getAllBookings();
-    //     this.isLoading = false;
-    //   },
-    //   error: () => {
-    //     this.notificationService.showErrorNotification("There was a problem loading your data!");
-    //     this.isLoading = false;
-    //   }
-    // });
-  }
-
-  private getAllReviews() {
-    this.reviewsAreLoading = true;
-    this.reviewService.getAllReviews().subscribe({
+    this.accountService.getMyData().subscribe({
       next: resp => {
-        // this.myReviews = resp.filter(review => review.accountId === this.account.accountId);
-        let reviewsLoaded: number = 0;
-        this.myReviews.forEach(review => {
-          this.reviewService.getReviewEntityById(review.reviewId!!).subscribe({
-            next: resp => {
-              // review.reviewEntity = resp;
-              reviewsLoaded++;
-
-              if(reviewsLoaded === this.myReviews.length) {
-                this.reviewsAreLoading = false;
-              }
-            },
-            error: () => {
-              this.reviewsAreLoading = false;
-              this.notificationService.showErrorNotification("There was an error while a review's data!");
-            }
-          });
-        });
+        this.account = resp;
+        this.myBookings = resp.bookings!!;
+        this.myReviews = resp.reviews!!;
+        this.isLoading = false;
       },
       error: () => {
-        this.reviewsAreLoading = false;
-        this.notificationService.showErrorNotification("There was an error while loading your reviews!");
+        this.notificationService.showErrorNotification("There was a problem loading your data!");
+        this.isLoading = false;
       }
     });
   }
 
-  private getAllBookings() {
-    this.bookingsAreLoading = true;
-    this.bookingService.getAllBookings().subscribe({
-      next: resp => {
-        this.myBookings = resp.filter(booking => booking.accountId === this.account.accountId);
-        let bookingsLoaded: number = 0;
-        this.myBookings.forEach(booking => {
-          this.bookingService.getBookingEntityById(booking.bookingId!!).subscribe({
-            next: resp => {
-              // booking.bookingEntity = resp;
-              bookingsLoaded++;
-
-              if(bookingsLoaded === this.myBookings.length) {
-                this.bookingsAreLoading = false;
-              }
-            },
-            error: () => {
-              this.bookingsAreLoading = false;
-              this.notificationService.showErrorNotification("There was an error while a booking's data!");
-            }
-          });
-        });
+  deleteBooking(booking: Booking){
+    this.bookingService.deleteBooking(booking.bookingId!!).subscribe({
+      next: resp =>{
+        if(resp){
+          let index = this.myBookings.indexOf(booking);
+          delete this.myBookings[index];
+        }
       },
-      error: () => {
-        this.bookingsAreLoading = false;
-        this.notificationService.showErrorNotification("There was an error while loading your bookings!");
+      error: err =>{
+
       }
     });
   }
+
+
+
+  getStatus(status: any){
+    if(status == 0) return "Created";
+    if(status == 1) return "Confirmed";
+    if(status == 2) return "Canceled";
+    return "";
+  }
+
+  getColor(status: any){
+    if(status == 0) return "background-color: rgb(14, 88, 152); margin-bottom: 20px;";
+    if(status == 1) return "background-color: rgb(3, 126, 54); margin-bottom: 20px;";
+    if(status == 2) return "background-color: rgb(10, 192, 4); margin-bottom: 20px;";
+    return "";
+  }
+
 }
