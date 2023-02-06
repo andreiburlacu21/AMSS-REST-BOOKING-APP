@@ -1,19 +1,25 @@
-<div class="row page-container d-flex justify-content-center">
-    <!-- <mat-progress-bar *ngIf="isLoading" mode="indeterminate" class="m-0 p-0"></mat-progress-bar> -->
+<div class="row page-container d-flex justify-content-center pb-5">
+    <mat-progress-bar *ngIf="isLoading || imagesAreLoading" mode="indeterminate" class="m-0 p-0"></mat-progress-bar>
 
     <mat-card class="row col-10 mt-3">
         <div class="d-flex align-items-center">
-            <button mat-mini-fab color="primary" class="action-fab-btn me-3" [routerLink]="['/home']">
+            <button mat-mini-fab class="action-fab-btn me-3 add-photo-btn" [routerLink]="['/home']">
                 <mat-icon> arrow_back </mat-icon>
             </button>
             <span class="float-start title">{{restaurant.name!}}</span>
-            <app-star-rating *ngIf="!isLoading" [rating]="3"
-                [readonly]="true" class="ms-auto"></app-star-rating>
+            <app-star-rating *ngIf="!isLoading" [rating]="restaurant.rating!" [readonly]="true"
+                class="ms-auto"></app-star-rating>
         </div>
     </mat-card>
 
     <mat-card class="locations-container col-10 mt-2">
-        <div style=" text-align:center;margin:0; padding:0;">
+        <div class="d-flex align-items-center mb-2">
+            <button mat-mini-fab class="action-fab-btn mb-1 add-photo-btn label-icon">
+                <mat-icon> imagesmode </mat-icon>
+            </button>
+            <mat-card-title class="ms-1 mt-2">Images</mat-card-title>
+        </div>
+        <div style=" text-align:center;margin:0; padding:0;" *ngIf="!imagesAreLoading">
             <ng-image-slider #nav [images]="imageObject" [infinite]="false" [autoSlide]="1"
                 [imageSize]="{width: '25%', height: 200}" slideImage="1" (imageClick)="zoomImage()"
                 (lightboxClose)="exitImage()">
@@ -23,69 +29,47 @@
 
     <mat-card class="col-10 mt-2">
         <div class="d-flex align-items-center">
-            <mat-card-title class="pb-2 ms-2">Details</mat-card-title>
+            <button mat-mini-fab class="action-fab-btn mb-1 add-photo-btn label-icon">
+                <mat-icon> info </mat-icon>
+            </button>
+            <mat-card-title class="ms-1 mt-2">Details</mat-card-title>
         </div>
-        <p> <span class="me-2 ms-2">Address: </span> {{restaurantDetails.location?.address}} </p>
-        <p> <span class="me-2 ms-2">Description: </span> {{restaurant.description}}  </p>
+        <p> <span class="me-2 ms-2" *ngIf="!isLoading!">Address: </span> {{restaurantDetails.location?.address}} </p>
+        <p> <span class="me-2 ms-2">Description: </span> {{restaurant.description}} </p>
     </mat-card>
 
-    <mat-accordion class="example-headers-align booking-component col-10 mt-2" multi>
+    <mat-accordion class="booking-component col-10 mt-2" multi>
         <mat-expansion-panel>
             <mat-expansion-panel-header class="location-header">
                 <div class="d-flex align-items-center">
-                    <button mat-mini-fab class="action-fab-btn ms-auto add-photo-btn">
-                        <mat-icon> book </mat-icon>
+                    <button mat-mini-fab class="action-fab-btn ms-1 add-photo-btn label-icon">
+                        <mat-icon> menu_book </mat-icon>
                     </button>
-                    <mat-card-title class="pt-3">Make a reservation</mat-card-title>
+                    <mat-card-title class="ms-1 pt-3">Menu</mat-card-title>
                 </div>
             </mat-expansion-panel-header>
 
-            <div class="row d-flex justify-content-center mt-4">
-                <mat-form-field class="date-picker" appearance="fill">
-                    <mat-label>Select a day</mat-label>
-                    <input matInput [formControl]="inDateFormControl">
-                    <mat-datepicker-toggle matSuffix [for]="makePicker"></mat-datepicker-toggle>
-                    <mat-datepicker [dateClass]="dateClass" #makePicker></mat-datepicker>
-                </mat-form-field>
-
-                <!-- <mat-form-field class="date-picker">
-                    <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" >
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds"
-                       [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond"
-                       [touchUi]="touchUi" [color]="color" [enableMeridian]="enableMeridian" 
-                       [disableMinute]="disableMinute" [hideTime]="hideTime">
-                    </ngx-mat-datetime-picker>
-                 </mat-form-field> -->
-
-                <div *ngIf="outdoorTables.length > 0" class="location-component col-7 me-2 pb-4">
-                    <p class="mb-3">Indoor tables</p>
-
-                    <div class="d-flex justify-content-center card-group gap-5 cards-container">
-                        <app-table class="grid-item" *ngFor="let table of indoorTables" [numberOfSeats]="table.numberOfSeats!!">
-                        </app-table>
-                    </div>
-                </div>
-
-                <div *ngIf="outdoorTables.length === 0" class="location-component col-11 me-2 pb-4">
-                    <p class="mb-3">Indoor tables</p>
-                </div>
-
-                <div *ngIf="outdoorTables.length > 0" class="location-component col-4 me-2 pb-4">
-                    <p class="mb-3">Outdoor tables</p>
-
-                    <div class="d-flex justify-content-center card-group gap-5 cards-container">
-                        <app-table class="grid-item" *ngFor="let table of outdoorTables" [numberOfSeats]="table.numberOfSeats!!">
-                        </app-table>
-                    </div>
-                </div>
+            <div class="d-flex justify-content-center">
+                <table *ngIf="menuContent !== ''">
+                    <tbody>
+                        <tr *ngFor="let menuItem of menuContent.split(';'); index as i">
+                            <td *ngIf="i+1 < menuContent.split(';').length"> {{ i + 1 }}. {{ menuItem }} </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p *ngIf="menuContent === ''"> No menu available! </p>
             </div>
-
         </mat-expansion-panel>
     </mat-accordion>
 
     <mat-card class="col-10 mt-2">
-        <mat-card-title class="pb-2 ms-2">Location</mat-card-title>
+        <div class="d-flex align-items-center">
+            <button mat-mini-fab class="action-fab-btn mb-1 add-photo-btn label-icon">
+                <mat-icon> location_on </mat-icon>
+            </button>
+            <mat-card-title class="ms-1 mt-2">Location</mat-card-title>
+        </div>
+
         <mat-card-content *ngIf="!isLoading" class="img-container d-flex justify-content-center mt-4 ms-5 me-5">
             <google-map height="400px" width="1050px" [center]="center" [zoom]="zoom">
                 <map-marker [position]="center" [options]="markerOptions"></map-marker>
@@ -94,17 +78,122 @@
         </mat-card-content>
     </mat-card>
 
+    <mat-accordion class="booking-component col-10 mt-2" multi>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header class="location-header">
+                <div class="d-flex align-items-center">
+                    <button mat-mini-fab class="action-fab-btn ms-1 add-photo-btn label-icon">
+                        <mat-icon> book </mat-icon>
+                    </button>
+                    <mat-card-title class="ms-1 pt-3">Make a reservation</mat-card-title>
+                </div>
+            </mat-expansion-panel-header>
+
+            <div class="row ms-3">
+                <!-- <mat-form-field appearance="fill" class="">
+                    <mat-label>Choose a date</mat-label>
+                    <input matInput [matDatepicker]="picker" [value]="inDateFormControl">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-datepicker-toggle matIconPreffix [for]="picker"></mat-datepicker-toggle>
+                </mat-form-field> -->
+
+                <mat-form-field appearance="fill" class="col-3">
+                    <mat-label>Check in date</mat-label>
+                    <input matInput [formControl]="inDateFormControl" [matDatepicker]="makePicker">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matSuffix [for]="makePicker"></mat-datepicker-toggle>
+                    <mat-datepicker [dateClass]="dateClass" #makePicker></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="col-3">
+                    <mat-label>Start hour</mat-label>
+                    <input matInput type="number" formControlName="startHourFormControl" [value]="startHourFormControl.getRawValue()" 
+                    [(ngModel)]="startHourFormControl">
+                    <mat-hint>Eg: 18 / 10</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="col-3">
+                    <mat-label>End hour</mat-label>
+                    <input matInput type="number" formControlName="endHourFormControl" [value]="endHourFormControl.getRawValue()" 
+                    [(ngModel)]="endHourFormControl" [disabled]="startHourFormControl.hasError('required')">
+                    <mat-hint>Eg: 18 / 10</mat-hint>
+                    <mat-error *ngIf="endHourFormControl.hasError('min')">
+                        End date must be at least with one hour more than start date!
+                    </mat-error>
+                    <mat-error *ngIf="endHourFormControl.hasError('max')">
+                        End date must be at least with one hour more than start date!
+                    </mat-error>
+                </mat-form-field>
+
+                <button class="col-1 mt-2 primary-action-btn justify-content-center" (click)="confirmDates()"
+                [disabled]="inDateFormControl.hasError('required') || startHourFormControl.hasError('required') ||  startHourFormControl.hasError('min') ||
+                startHourFormControl.hasError('max') || endHourFormControl.hasError('required') || endHourFormControl.hasError('min') 
+                || endHourFormControl.hasError('max')">
+                    Confirm
+                </button>
+            </div>
+
+            <div *ngIf="reservationDatesHaveBeenGiven" class="row d-flex justify-content-center mt-4">
+                <div *ngIf="outdoorTables.length > 0" class="location-component col-7 me-2 pb-4">
+                    <div class="d-flex align-items-center mb-2">
+                        <mat-icon> table_bar </mat-icon>
+                        <p class="ms-2 mt-3"> Indoor tables</p>
+                    </div>
+
+                    <div class="d-flex justify-content-center card-group gap-5 cards-container">
+                        <app-table class="grid-item restaurant-table" *ngFor="let table of indoorTables" (click)="selectTable(table)"
+                            [numberOfSeats]="table.numberOfSeats!!" [isSelected]="isTableSelected(table.tableId!)" [isOccupied]="isTableOccupied(table.tableId!)">  
+                        </app-table>
+                    </div>
+                </div>
+
+                <div *ngIf="outdoorTables.length === 0" class="location-component col-11 me-2 pb-4">
+                    <div class="d-flex align-items-center">
+                        <mat-icon> table_bar </mat-icon>
+                        <p class="ms-2 mt-3"> Indoor tables</p>
+                    </div>
+                </div>
+
+                <div *ngIf="outdoorTables.length > 0" class="location-component col-4 me-2 pb-4">
+                    <div class="d-flex align-items-center mb-2">
+                        <mat-icon> deck </mat-icon>
+                        <p class="ms-2 mt-3">Outdoor tables</p>
+                    </div>
+
+                    <div class="d-flex justify-content-center card-group gap-5 cards-container">
+                        <app-table class="grid-item restaurant-table" *ngFor="let table of outdoorTables" (click)="selectTable(table)"
+                            [numberOfSeats]="table.numberOfSeats!!" [isSelected]="isTableSelected(table.tableId!)" [isOccupied]="isTableOccupied(table.tableId!)">
+                        </app-table>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="reservationDatesHaveBeenGiven" class="row mt-1">
+                <button class="col-1 mt-2 primary-action-btn d-flex ms-auto align-items-center justify-content-center me-5" 
+                (click)="makeReservation()" [disabled]="!isOneTableSelected">
+                    Book
+                </button>
+            </div>
+
+        </mat-expansion-panel>
+    </mat-accordion>
+
     <mat-card class="col-10 mt-2 mb-5">
         <div class="d-flex align-items-center">
-            <mat-card-title class="ms-2">Reviews</mat-card-title>
+            <button mat-mini-fab class="action-fab-btn mb-1 add-photo-btn label-icon">
+                <mat-icon> thumbs_up_down </mat-icon>
+            </button>
+            <mat-card-title class="ms-1 mt-2">Reviews</mat-card-title>
             <button mat-mini-fab class="action-fab-btn ms-auto add-photo-btn" (click)="writeReview()" [disabled]="true">
                 <mat-icon> rate_review </mat-icon>
             </button>
             <span class="me-2">Write a review</span>
         </div>
 
-        <mat-card-content *ngIf="reviews.length > 0" class="row mt-3 d-flex justify-content-center reviews-card">
-            <mat-card class="row mb-2 review-card" *ngFor="let review of reviews; index as i">
+        <mat-card-content *ngIf="restaurantDetails && restaurantDetails.reviews!.length > 0"
+            class="row mt-3 d-flex justify-content-center reviews-card">
+            <mat-card class="row mb-2 review-card" *ngFor="let review of restaurantDetails.reviews; index as i">
                 <mat-card-header>
                     <mat-card-subtitle class="pt-1"> {{i+1}}. <span class="ms-2"> User </span>
                     </mat-card-subtitle>
@@ -117,9 +206,9 @@
             </mat-card>
         </mat-card-content>
 
-        <mat-card-content *ngIf="reviews.length <= 0 && !isLoading"
+        <mat-card-content *ngIf="restaurantDetails && restaurantDetails.reviews!.length <= 0 && !isLoading"
             class="row mt-3 d-flex justify-content-center reviews-card">
-            <h3 class="col-4 ps-5">Be the first one to review this location!</h3>
+            <h3 class="col-4 ps-5 pb-4">Be the first one to review this location!</h3>
         </mat-card-content>
     </mat-card>
 </div>

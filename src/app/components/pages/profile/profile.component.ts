@@ -88,7 +88,7 @@ export class ProfileComponent implements OnInit {
         this.myBookings.forEach(booking => {
           this.bookingService.getBookingEntityById(booking.bookingId!!).subscribe({
             next: resp => {
-              booking.bookingEntity = resp;
+              // booking.bookingEntity = resp;
               bookingsLoaded++;
 
               if(bookingsLoaded === this.myBookings.length) {

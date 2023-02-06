@@ -1,35 +1,23 @@
 <div class="dialog-container">
-    <h1 mat-dialog-title> Make a reservation for this restaurant</h1>
+    <h1 mat-dialog-title> Check your email for the confirmation code and enter it below</h1>
 
     <div mat-dialog-content>
-        <div class="row justify-content-center">
-            <mat-form-field *ngIf="enableDates" appearance="fill">
-                <mat-label>Check in date</mat-label>
-                <input matInput [min]="minDate" [formControl]="inDateFormControl" [matDatepickerFilter]="myFilterIn"
-                    [matDatepicker]="makePicker" (dateChange)="setInDate()">
-                <mat-datepicker-toggle matSuffix [for]="makePicker"></mat-datepicker-toggle>
-                <mat-datepicker [dateClass]="dateClass" #makePicker></mat-datepicker>
-            </mat-form-field>
+        <div *ngIf="!confirmationMailSent" class="h-100 m-0 p-0 d-flex justify-content-center align-items-center">
+            <mat-spinner class="loading-spinner"></mat-spinner>
+        </div>
 
-            <mat-form-field *ngIf="enableDates" appearance="fill">
-                <mat-label>Check out date</mat-label>
-                <input matInput [min]="minDate" [formControl]="outDateFormControl" [matDatepickerFilter]="myFilterOut"
-                    [matDatepicker]="makePicker" [disabled]="!inDateFormControl.dirty" (dateChange)="setOutDate()">
-                <mat-datepicker-toggle matSuffix [for]="makePicker"></mat-datepicker-toggle>
-                <mat-datepicker [dateClass]="dateClass" #makePicker></mat-datepicker>
+        <div *ngIf="confirmationMailSent" class="row justify-content-center">
+            <mat-form-field appearance="outline">
+                <mat-label> Confirmation code </mat-label>
+                <input matInput [(ngModel)]="enteredCode">
             </mat-form-field>
-            
-            <div *ngIf="totalPrice !== 0">
-                <p> Total cost is {{totalPrice}} RON for {{noOfDaysBooked}} day(s)</p>
-            </div>
         </div>
     </div>
 
     <div class="d-flex">
         <button mat-dialog-close class="primary-action-btn action-btn">Cancel</button>
-        <button class="primary-action-btn action-btn ms-auto" [disabled]="!inDateFormControl.dirty && !outDateFormControl.dirty"
-            (click)="addBooking()">
-            Book
+        <button *ngIf="confirmationMailSent" class="primary-action-btn action-btn ms-auto" (click)="submitCode()">
+            Enter
         </button>
     </div>
 </div>

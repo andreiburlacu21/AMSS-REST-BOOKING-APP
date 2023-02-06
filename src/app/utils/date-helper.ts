@@ -9,9 +9,9 @@ export class DateHelper {
 
     constructor(private service: BookingService, locationId: number) {
         this.dictionary = new Map();
-        service.getBookingsByLocationId(locationId).subscribe(bookings =>
-            bookings.forEach(value => this.dictionary.set(value.bookingId, [value.inDate, value.outDate]
-            )));
+        // service.getBookingsByLocationId(locationId).subscribe(bookings =>
+        //     bookings.forEach(value => this.dictionary.set(value.bookingId, [value.inDate, value.outDate]
+        //     )));
     }
     static getDate(date: any) {
         return (new Date(date)).toLocaleDateString().replace("/", "-").replace("/", "-");

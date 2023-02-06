@@ -62,11 +62,11 @@ export class BookingDialogComponent implements OnInit {
 
     if (this.action === Action.UPDATE) {
       this.accountIdFormControl.setValue(this.booking.accountId + "");
-      this.locationFormControl.setValue(this.booking.locationId + "");
-      this.phoneNumberFormControl.setValue(this.booking.phoneNumber!!);
-      this.inDateFormControl.setValue(new Date(this.booking.inDate!!));
-      this.outDateFormControl.setValue(new Date(this.booking.outDate!!));
-      this.totalPriceFormControl.setValue(this.booking.totalPrice!!);
+      // this.locationFormControl.setValue(this.booking.locationId + "");
+      // this.phoneNumberFormControl.setValue(this.booking.phoneNumber!!);
+      // this.inDateFormControl.setValue(new Date(this.booking.inDate!!));
+      // this.outDateFormControl.setValue(new Date(this.booking.outDate!!));
+      // this.totalPriceFormControl.setValue(this.booking.totalPrice!!);
     }
   }
 
@@ -85,11 +85,11 @@ export class BookingDialogComponent implements OnInit {
   addBooking() {
     var booking = new Booking();
     booking.accountId = this.accountIdFormControl.getRawValue() as unknown as number;
-    booking.inDate = this.inDateFormControl.getRawValue()?.toDateString();
-    booking.outDate = this.outDateFormControl.getRawValue()?.toDateString();
-    booking.phoneNumber = this.phoneNumberFormControl.getRawValue() ?? "";
-    booking.locationId = this.locationFormControl.getRawValue() as unknown as number;
-    booking.totalPrice = this.totalPriceFormControl.getRawValue() as unknown as number;
+    // booking.inDate = this.inDateFormControl.getRawValue()?.toDateString();
+    // booking.outDate = this.outDateFormControl.getRawValue()?.toDateString();
+    // booking.phoneNumber = this.phoneNumberFormControl.getRawValue() ?? "";
+    // booking.locationId = this.locationFormControl.getRawValue() as unknown as number;
+    // booking.totalPrice = this.totalPriceFormControl.getRawValue() as unknown as number;
 
     this.bookingService.addBooking(booking)
       .subscribe(value => {

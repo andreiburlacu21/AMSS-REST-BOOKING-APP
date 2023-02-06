@@ -23,8 +23,6 @@ export class HomeComponent implements OnInit {
   locationsAreLoading = false;
   isAdminLoggedIn: boolean = false;
   locationsWithAllDetails: LocationWithAllDetails[] = [];
-  bookings: Booking[] = []
-  reviews: Review[] = []
   searchInput: string = ""
   restaurants: Restaurant[] = [];
   filteredRestaurants: Restaurant[] = [];
@@ -111,34 +109,6 @@ export class HomeComponent implements OnInit {
     } else {
       this.filteredRestaurants = this.restaurants;
     }
-  }
-
-  calculateLocationRating(locationId: number): number {
-    let reviewsForThisLocation: Review[] = [];
-    let totalScore: number = 0;
-
-    this.reviews.forEach(review => {
-      // if (review.locationId === locationId) {
-      //   totalScore += review.grade!!;
-      //   reviewsForThisLocation.push(review);
-      // }
-    });
-
-    if (reviewsForThisLocation.length === 0) {
-      return 0;
-    }
-
-    let rating: number = totalScore / reviewsForThisLocation.length;
-
-    if (rating % 1 < 0.5) {
-      return Math.floor(rating);
-    }
-
-    if (rating % 1 >= 0.5) {
-      return Math.ceil(rating);
-    }
-
-    return 0;
   }
 
   getLocationByRestaurantId(restaurant: Restaurant): Location | undefined {
