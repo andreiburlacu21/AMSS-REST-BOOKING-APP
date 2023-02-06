@@ -61,7 +61,8 @@ export class LocationPageComponent implements OnInit {
   canThisUserReviewTheLocation: boolean = false;
   finishedBookingForThisUser: Booking = new Booking();
   accounts: Account[] = [];
-
+  todayDate: Date = new Date();
+  
   constructor(private router: Router,
     private imageService: ImageService,
     private reviewService: ReviewService,
@@ -152,14 +153,12 @@ export class LocationPageComponent implements OnInit {
       next: images => {
         this.images = images;
         this.images.forEach(imgSource => {
-
           this.imageObject.push({
-            image: imgSource,
-            thumbImage: imgSource
+            image: imgSource.replace("http:", "http://"),
+            thumbImage: imgSource.replace("http:", "http://")
           });
         });
 
-        console.log(this.imageObject);
         this.imagesAreLoading = false;
       },
       error: () => {

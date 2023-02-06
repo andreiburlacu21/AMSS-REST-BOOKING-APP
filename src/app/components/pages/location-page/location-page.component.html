@@ -92,7 +92,7 @@
             <div class="row ms-3">
                 <mat-form-field appearance="fill" class="col-3">
                     <mat-label>Check in date</mat-label>
-                    <input matInput [formControl]="inDateFormControl" [matDatepicker]="makePicker">
+                    <input matInput [formControl]="inDateFormControl" [matDatepicker]="makePicker" [min]="todayDate">
                     <mat-hint>MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle matSuffix [for]="makePicker"></mat-datepicker-toggle>
                     <mat-datepicker [dateClass]="dateClass" #makePicker></mat-datepicker>

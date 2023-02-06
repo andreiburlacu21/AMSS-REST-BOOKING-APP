@@ -20,7 +20,7 @@
         </mat-icon>
         <button class="menu-btn primary-text"> Home </button>
     </div>
-    <div class="menu-option d-flex justify-content-center align-items-center mb-2 hover-underline-animation pe-4" [routerLink]="['/profile']">
+    <div *ngIf="!isAdminLoggedIn" class="menu-option d-flex justify-content-center align-items-center mb-2 hover-underline-animation pe-4" [routerLink]="['/profile']">
         <mat-icon class="ms-2" [ngClass]="router.url.includes('/profile') ? 'active-icon-fill' : ''">
             account_circle
         </mat-icon>
