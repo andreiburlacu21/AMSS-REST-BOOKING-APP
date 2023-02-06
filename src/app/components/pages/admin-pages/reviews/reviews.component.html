@@ -5,10 +5,10 @@
                 <mat-icon> arrow_back </mat-icon>
             </button>
             <span class="float-start title">Reviews</span>
-            <button mat-mini-fab class="action-fab-btn ms-auto add-btn" (click)="addReview()">
+            <!-- <button mat-mini-fab class="action-fab-btn ms-auto add-btn" (click)="addReview()">
                 <mat-icon> add </mat-icon>
             </button>
-            <span>Add new review</span>
+            <span>Add new review</span> -->
         </div>
     </mat-card>
     <mat-card class="table-container col-10 mt-2">
@@ -24,17 +24,17 @@
         <table *ngIf="reviews.length > 0" class="table text-center primary-text">
             <thead>
                 <tr>
-                    <th scope="col"> Booking id</th>
+                    <th scope="col"> Restaurant id</th>
                     <th scope="col"> Score </th>
                     <th scope="col"> Comment </th>
-                    <th></th>
+                    <!-- <th></th> -->
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let review of reviews" class="align-items-center">
                     <td class="pt-3">
-                        {{ review.bookingId }}
+                        {{ review.restaurantId }}
                     </td>
                     <td class="pt-3">
                         {{ review.grade }}
@@ -42,11 +42,11 @@
                     <td class="pt-3">
                         {{ review.description }}
                     </td>
-                    <td>
+                    <!-- <td>
                         <button mat-mini-fab class="action-fab-btn edit-btn" (click)="editReview(review)">
                             <mat-icon> edit </mat-icon>
                         </button>
-                    </td>
+                    </td> -->
                     <td>
                         <button mat-mini-fab class="action-fab-btn delete-btn" (click)="deleteReview(review)">
                             <mat-icon> delete </mat-icon>

@@ -25,6 +25,7 @@ export class BookingsComponent implements OnInit {
   }
 
   private getAllBookings() {
+    this.bookings = [];
     this.isLoading = true;
     this.bookingService.getAllBookings().subscribe({
       next: resp => {
@@ -38,28 +39,16 @@ export class BookingsComponent implements OnInit {
     });
   }
 
-  addBooking() {
-    let dialogRef = this.dialog.open(BookingDialogComponent, {
-      width: '500px',
-      data: {
-        action: Action.ADD
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(newBooking => {
-      if (newBooking) {
-        this.notificationService.showSuccessNotification("Account added!");
-        this.getAllBookings();
-      }
-    });
-
-  }
-
-  editBooking(booking: Booking) {
-
-  }
-
   deleteBooking(booking: Booking) {
-
+    this.bookingService.deleteBooking(booking.bookingId!).subscribe({
+      next: () => {
+        this.notificationService.showSuccessNotification("Booking deleted!");
+        this.getAllBookings();
+      },
+      error: err => {
+        this.notificationService.showErrorNotification("Booking failed to delete!");
+        console.log(err);
+      }
+    });
   }
 }

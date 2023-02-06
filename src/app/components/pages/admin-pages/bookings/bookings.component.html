@@ -5,10 +5,10 @@
                 <mat-icon> arrow_back </mat-icon>
             </button>
             <span class="float-start title">Bookings</span>
-            <button mat-mini-fab class="action-fab-btn ms-auto add-btn" (click)="addBooking()">
+            <!-- <button mat-mini-fab class="action-fab-btn ms-auto add-btn" (click)="addBooking()">
                 <mat-icon> add </mat-icon>
             </button>
-            <span>Add new booking</span>
+            <span>Add new booking</span> -->
         </div>
     </mat-card>
     <mat-card class="table-container col-10 mt-2">
@@ -25,11 +25,11 @@
             <thead>
                 <tr>
                     <th scope="col"> Account Id </th>
-                    <th scope="col"> Location Id </th>
-                    <th scope="col"> Phone Number </th>
-                    <th scope="col"> Check in </th>
-                    <th scope="col"> Check out </th>
-                    <th scope="col"> Price </th>
+                    <th scope="col"> Restaurant Id </th>
+                    <th scope="col"> Table Id</th>
+                    <th scope="col"> Start date </th>
+                    <th scope="col"> End date </th>
+                    <th scope="col"> Status </th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -39,25 +39,20 @@
                     <td class="pt-3">
                         {{ booking.accountId }}
                     </td>
-                    <!-- <td class="pt-3">
-                        {{ booking.locationId }}
+                    <td class="pt-3">
+                        {{ booking.restaurantId }}
                     </td>
                     <td class="pt-3">
-                        {{ booking.phoneNumber }}
-                    </td> -->
-                    <!-- <td class="pt-3">
-                        {{ booking.inDate | date : 'dd-MM-yyyy' }} {{ booking.inDate | date : 'HH:mm' }}
+                        {{ booking.tableId }}
                     </td>
                     <td class="pt-3">
-                        {{ booking.outDate | date : 'dd-MM-yyyy' }} {{ booking.outDate | date : 'HH:mm' }}
+                        {{ booking.startDate | date : 'dd-MM-yyyy' }} {{ booking.startDate | date : 'HH:mm' }}
                     </td>
                     <td class="pt-3">
-                        {{ booking.totalPrice }}
-                    </td> -->
-                    <td>
-                        <button mat-mini-fab class="action-fab-btn edit-btn" (click)="editBooking(booking)">
-                            <mat-icon> edit </mat-icon>
-                        </button>
+                        {{ booking.endDate | date : 'dd-MM-yyyy' }} {{ booking.endDate | date : 'HH:mm' }}
+                    </td>
+                    <td class="pt-3">
+                        {{ booking.status == '0' ? 'Created' : booking.status == '1' ? 'Confirmed' : 'Cancelled' }}
                     </td>
                     <td>
                         <button mat-mini-fab class="action-fab-btn delete-btn" (click)="deleteBooking(booking)">

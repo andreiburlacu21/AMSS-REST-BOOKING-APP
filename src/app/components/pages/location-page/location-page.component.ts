@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { MatBottomSheet, MatBottomSheetConfig, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Account } from 'src/app/models/account.model';
@@ -23,6 +23,7 @@ import { WriteAReviewComponent } from './write-a-review/write-a-review.component
   templateUrl: './location-page.component.html',
   styleUrls: ['./location-page.component.scss']
 })
+
 export class LocationPageComponent implements OnInit {
   isLoading: boolean = false;
   imagesAreLoading: boolean = false;
@@ -32,9 +33,8 @@ export class LocationPageComponent implements OnInit {
   restaurant: Restaurant = new Restaurant();
   restaurantDetails: RestaurantWithAllDetails = new RestaurantWithAllDetails();
   inDateFormControl = new FormControl(new Date(), [Validators.required]);
-  startHourFormControl = new FormControl(8, [Validators.required, Validators.min(8), Validators.max(24)])
-  endHourFormControl = new FormControl(9, [Validators.required, Validators.min(Number(this.startHourFormControl.getRawValue) + 1), 
-    Validators.max(24)])
+  startHour: number = 8
+  endHour: number = 9
   dateClass: any;
   center: google.maps.LatLngLiteral = {
     lat: Number(environment.locationX),
@@ -58,6 +58,9 @@ export class LocationPageComponent implements OnInit {
   loggedInACcount: Account = new Account();
   reservationInDate: Date = new Date();
   reservationOutDate: Date = new Date();
+  canThisUserReviewTheLocation: boolean = false;
+  finishedBookingForThisUser: Booking = new Booking();
+  accounts: Account[] = [];
 
   constructor(private router: Router,
     private imageService: ImageService,
@@ -73,11 +76,39 @@ export class LocationPageComponent implements OnInit {
 
   ngOnInit() {
     this.getRestaurantAllDetails();
-    this.getAccountDetails();
+    this.getAllAccounts();
+  }
+
+  private getAllAccounts() {
+    this.accountService.getAllAccounts().subscribe({
+      next: resp => {
+        this.accounts = resp;
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
+  }
+
+  getUsernameByAccountId(accountId: number) {
+    let account = this.accounts.find(acc => acc.accountId === accountId);
+    if(account) {
+      return account.userName;
+    }
+    return "user";
   }
 
   private getAccountDetails() {
-    this.accountService.getMyData().subscribe(resp => this.loggedInACcount = resp);
+    this.accountService.getMyData().subscribe(resp => {
+      this.loggedInACcount = resp;
+
+      this.restaurantDetails.bookings?.forEach(booking => {
+        if(new Date(booking.endDate!) < new Date() && booking.status == '1' && booking.accountId == this.loggedInACcount.accountId) {
+          this.canThisUserReviewTheLocation = true;
+          this.finishedBookingForThisUser = booking;
+        }
+      });
+    });
   }
 
   private getRestaurantAllDetails() {
@@ -85,6 +116,16 @@ export class LocationPageComponent implements OnInit {
     this.restaurantService.getRestaurantWithAllDetails(this.restaurant.restaurantId!).subscribe({
       next: resp => {
         this.restaurantDetails = resp;
+        this.getAccountDetails();
+
+        // calcualte restaurant's rating
+        let totalStars = 0;
+        this.restaurantDetails.reviews?.forEach(review => {
+          totalStars += review.grade!;
+        });
+
+        this.restaurant.rating = totalStars / this.restaurantDetails.reviews?.length!;
+
         this.isLoading = false;
 
         this.restaurantDetails.tables?.forEach(table => { // dividing the tables based on their location inside the restaurant
@@ -110,7 +151,6 @@ export class LocationPageComponent implements OnInit {
     this.imageService.getImages("location", this.restaurant.restaurantId!).subscribe({
       next: images => {
         this.images = images;
-        console.log(images);
         this.images.forEach(imgSource => {
 
           this.imageObject.push({
@@ -138,44 +178,50 @@ export class LocationPageComponent implements OnInit {
   }
 
   writeReview() {
-    // const config: MatBottomSheetConfig = { data: { location: this.location, account: this.loggedInAccount } };
+    const config: MatBottomSheetConfig = { data: { restaurant: this.restaurant } };
 
-    // this.bottomSheetRef = this._bottomSheet.open(WriteAReviewComponent, config);
-
-    // this.bottomSheetRef.afterDismissed().subscribe(() => {
-    //   this.getReviews();
-    // });
+    this.bottomSheetRef = this._bottomSheet.open(WriteAReviewComponent, config);
   }
 
-  book() {
-    // let dialogRef = this.dialog.open(MakeAReservationComponent, {
-    //   width: '500px',
-    //   data: {
-    //     account: this.loggedInAccount,
-    //     location: this.location
-    //   }
-    // });
+  hoursAreValid(): boolean {
+    if(this.startHour < 8 || this.endHour < 9) {
+      return false;
+    }
+    if(this.startHour > 23 || this.endHour > 24) {
+      return false;
+    }
 
-    // dialogRef.afterClosed().subscribe(newBooking => {
-    //   if (newBooking) {
-    //     this.notificationService.showSuccessNotification("Location booked!");
-    //   }
-    // });
+    if(this.startHour >= this.endHour) {
+      return false;
+    }
 
+    return true;
   }
 
   confirmDates() {
-    this.reservationInDate = this.inDateFormControl.getRawValue()!;
-    this.reservationInDate!.setHours(this.startHourFormControl.getRawValue()!, 0, 0);
+    this.reservationInDate = new Date(this.inDateFormControl.getRawValue()!);
+    this.reservationInDate!.setHours(this.startHour, 0, 0);
 
     this.reservationOutDate = new Date(this.inDateFormControl.getRawValue()!);
-    this.reservationOutDate!.setHours(this.endHourFormControl.getRawValue()!, 0, 0);
+    this.reservationOutDate!.setHours(this.endHour!, 0, 0);
 
     this.reservationDatesHaveBeenGiven = true;
+
     this.occupiedTables = [];
+    this.outdoorTables = [];
+    this.indoorTables = [];
+
+    this.restaurantDetails.tables?.forEach(table => { // dividing the tables based on their location inside the restaurant
+      if (table.outdoor) {
+        this.outdoorTables.push(table);
+      } else {
+        this.indoorTables.push(table);
+      }
+    });
 
     this.restaurantDetails.bookings?.forEach(booking => {
-      if(this.reservationInDate! < new Date(booking.endDate!) && new Date(booking.startDate!) < this.reservationOutDate! && booking.status !== "2") {
+      if (this.reservationInDate! < new Date(booking.endDate!) && new Date(booking.startDate!) < this.reservationOutDate!
+        && booking.status !== "2") {
         this.occupiedTables.push(
           this.restaurantDetails.tables?.find(table => table.tableId === booking.tableId)!
         );
@@ -184,7 +230,7 @@ export class LocationPageComponent implements OnInit {
   }
 
   selectTable(table: Table): void {
-    if(this.selectedTableForReservation !== table && !this.occupiedTables.find(tb => tb.tableId === table.tableId)) {
+    if (this.selectedTableForReservation !== table && !this.occupiedTables.find(tb => tb.tableId === table.tableId)) {
       this.isOneTableSelected = true;
       this.selectedTableForReservation = table;
     } else {
@@ -200,7 +246,7 @@ export class LocationPageComponent implements OnInit {
   isTableOccupied(tableId: number): boolean {
     let table = this.occupiedTables.find(table => table.tableId === tableId);
 
-    if(table) {
+    if (table) {
       return true;
     }
     return false;
@@ -224,7 +270,11 @@ export class LocationPageComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(resp => {
+      this.reservationDatesHaveBeenGiven = false;
 
+      this.occupiedTables = [];
+      this.outdoorTables = [];
+      this.indoorTables = [];
     });
   }
 }

@@ -57,7 +57,7 @@
 
                     <div class="row mb-4" *ngFor="let booking of myBookings">
                         <mat-card>
-                            <mat-card-header class="card-header" [style]="getColor(booking.status)" >
+                            <mat-card-header class="card-header pt-3" [style]="getColor(booking.status)" >
                                 <mat-card-title>
                                     Status: {{getStatus(booking.status)}}
                                 </mat-card-title>
