@@ -23,10 +23,8 @@
                     <button class="col-12 login-btn primary-action-btn"
                         [disabled]="usernameFormControl.hasError('required') || passwordFormControl.hasError('required')" (click)="logIn()"> Log in
                     </button>
-                    <div class="row mt-2 mb-2 justify-content-center">
-                        New to Sesfir?
-                    </div>
-                    <button class="col-12 register-btn secondary-action-btn" (click)="userWantsToRegister()"> Create an account </button>
+                    <div class="row mt-2 mb-2 justify-content-center"></div>
+                    <button class="col-12 register-btn secondary-action-btn" (click)="userWantsToRegister()"> Register </button>
                 </div>
             </form>
         </mat-card>
